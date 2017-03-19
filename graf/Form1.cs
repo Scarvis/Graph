@@ -19,7 +19,6 @@ namespace graf
         }
 
         graph fs; //граф и рисование графа
-        int u, v;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -27,7 +26,6 @@ namespace graf
             fs = new graph(
                             asd
                             );
-            u = v = -1;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -40,65 +38,103 @@ namespace graf
                     point.X,
                     point.Y
                     );
-                textBox1.Text = point.ToString();//DEBUG
-
+                textBox1.Text = point.ToString();   //DEBUG
             }
             else if(!edge.Enabled)
             {
                 var point = this.PointToClient(Cursor.Position);
                 fs.hitVertex(point);
-                fs.drawLineBetweenVertices();
             }
-            else if (!view.Enabled)
+            else if(!delVertex.Enabled)
             {
-
+                var point = this.PointToClient(Cursor.Position);
+                int v = fs.getHitVertex(point);
+                if (v == -1)
+                {
+                    return;
+                }
+                fs.delVertex(v);
+                fs.clearPicture();
+                fs.drawGraph();
             }
         }
         private void view_Click(object sender, EventArgs e)
         {
-            vertex.Enabled = true;
             view.Enabled = false;
+            vertex.Enabled = true;
             edge.Enabled = true;
             dfs.Enabled = true;
+            delVertex.Enabled = true;
+            delEdge.Enabled = true;
+            delGraph.Enabled = true;
         }
 
         private void vertex_Click(object sender, EventArgs e)
         {
-            vertex.Enabled = false;
             view.Enabled = true;
+            vertex.Enabled = false;
             edge.Enabled = true;
             dfs.Enabled = true;
+            delVertex.Enabled = true;
+            delEdge.Enabled = true;
+            delGraph.Enabled = true;
         }
 
         private void edge_Click(object sender, EventArgs e)
         {
-            vertex.Enabled = true;
             view.Enabled = true;
+            vertex.Enabled = true;
             edge.Enabled = false;
             dfs.Enabled = true;
+            delVertex.Enabled = true;
+            delEdge.Enabled = true;
+            delGraph.Enabled = true;
         }
 
         private void delVertex_Click(object sender, EventArgs e)
         {
-
+            view.Enabled = true;
+            vertex.Enabled = true;
+            edge.Enabled = true;
+            dfs.Enabled = true;
+            delVertex.Enabled = false;
+            delEdge.Enabled = true;
+            delGraph.Enabled = true;
         }
 
         private void delEdge_Click(object sender, EventArgs e)
         {
-
+            view.Enabled = true;
+            vertex.Enabled = true;
+            edge.Enabled = true;
+            dfs.Enabled = true;
+            delVertex.Enabled = true;
+            delEdge.Enabled = false;
+            delGraph.Enabled = true;
         }
 
         private void delGraph_Click(object sender, EventArgs e)
         {
-
+            view.Enabled = true;
+            vertex.Enabled = true;
+            edge.Enabled = true;
+            dfs.Enabled = true;
+            delVertex.Enabled = true;
+            delEdge.Enabled = true;
+            delGraph.Enabled = true;
+            MessageBox.Show("to4NO");
+            fs.clearPicture();
         }
 
         private void dfs_Click(object sender, EventArgs e)
         {
-            vertex.Enabled = true;
             view.Enabled = true;
+            vertex.Enabled = true;
             edge.Enabled = true;
             dfs.Enabled = false;
+            delVertex.Enabled = true;
+            delEdge.Enabled = true;
+            delGraph.Enabled = true;
 
             if (fs.connected())
             {

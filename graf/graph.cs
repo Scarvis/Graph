@@ -97,6 +97,11 @@ namespace graf
                 drawVertex(v1.x, v1.y, indexv1 + 1);
                 drawVertex(v2.x, v2.y, indexv2 + 1);
             }
+
+            public void clearPicture()
+            {
+                gr.Clear(Color.White);
+            }
         }
 
         class vertex
@@ -122,7 +127,7 @@ namespace graf
              * если работает как ссылки в с++, иначе
              * 
             */
-            public void delVertex(int v, vertex f)
+            private void delVertex(int v, vertex f)
             {
                 f.col.Remove(v);
             }
@@ -130,10 +135,10 @@ namespace graf
             {
                 foreach (int i in f[v].col)
                 {
-                    delVertex(v, f[i]);
-                    //f[v].col.Remove(v); иначе эта конструкция
+                    //delVertex(v, f[i]);
+                    f[i].col.Remove(v); //иначе эта конструкция
                 }
-                f[v].col.Clear();
+                f.Remove(f[v]);
                 return f;
             }
         }
@@ -210,9 +215,16 @@ namespace graf
             return isCheck;
         }
 
-        public void drawLineBetweenVertices()
+        public int getHitVertex(Point pt)
         {
-
+            for (int i = 0; i < g.Count; i++)
+            {
+                if (Math.Pow((g[i].x - pt.X), 2) + Math.Pow((g[i].y - pt.Y), 2) <= gr.radius * gr.radius)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         public bool connected()
@@ -237,7 +249,7 @@ namespace graf
             return isCheck;
         }
 
-        public void dfs(int v, List<bool> used)
+        private void dfs(int v, List<bool> used)
         {
             used[v] = true;
             for (int i = 0; i < g[v].col.Count; i++)
@@ -247,6 +259,35 @@ namespace graf
                 {
                     dfs(u, used);
                 }
+            }
+        }
+
+        public void delVertex(int v)
+        {
+            g = g[v].delVertex(v, g);
+        }
+
+        public void clearPicture()
+        {
+            gr.clearPicture();
+        }
+
+        public void drawGraph()
+        {
+            for(int i = 0; i < g.Count; ++i)
+            {
+                for(int j = 0; j < g[i].col.Count; ++j)
+                {
+                    if (i != j)
+                    {
+                        gr.drawEdge(g[i], g[j], i, j);
+                    }
+                }
+            }
+
+            for(int i = 0; i < g.Count; ++i)
+            {
+                drawVertex(g[i].x, g[i].y);
             }
         }
     }
