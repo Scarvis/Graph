@@ -94,8 +94,8 @@ namespace graf
                     , v2.x -2
                     , v2.y -2
                     );
-                drawVertex(v1.x, v1.y, indexv1 + 1);
-                drawVertex(v2.x, v2.y, indexv2 + 1);
+                drawVertex(v1.x, v1.y, v1.index + 1);
+                drawVertex(v2.x, v2.y, v2.index + 1);
             }
 
             public void clearPicture()
@@ -108,6 +108,7 @@ namespace graf
         {
             public List<int> col = new List<int>();
             public int x, y;
+            public int index = 0;
             public vertex()
             {
                 x = 0;
@@ -179,11 +180,19 @@ namespace graf
         public void addVertex(Point point)
         {
             g.Add(new vertex(point.X, point.Y));
+            g[g.Count - 1].index = g.Count - 1;
         }
 
-        public void drawVertex(int x, int y)
+        public void drawVertex(int x, int y, int indexVertex = -2)
         {
-            gr.drawVertex(x, y, g.Count);
+            if (indexVertex == -2)
+            {
+                gr.drawVertex(x, y, g.Count);
+            }
+            else
+            {
+                gr.drawVertex(x, y, indexVertex);
+            }
         }
 
         public bool hitVertex
@@ -267,6 +276,39 @@ namespace graf
             g = g[v].delVertex(v, g);
         }
 
+        public bool delEdge(Point pt)
+        {
+            Point e = pt;
+            for(int i = 0; i < g.Count; ++i)
+            {
+                for (int j = 0; j < g[i].col.Count; j++)
+                {
+                    //g[g[i].col[j]] вершина в которую ведет ребро из g[i]
+                    if (((e.X - g[i].x) * (g[g[i].col[j]].y - g[i].y) / (g[g[i].col[j]].x - g[i].x) + g[i].y) <= (e.Y + 4) &&
+                                    ((e.X - g[i].x) * (g[i].y - g[i].y) / (g[g[i].col[j]].x - g[i].x) + g[i].y) >= (e.Y - 4))
+                    {
+                        if ((g[i].x <= g[g[i].col[j]].x && g[i].x <= e.X && e.X <= g[g[i].col[j]].x) ||
+                            (g[i].x >= g[g[i].col[j]].x && g[i].x >= e.X && e.X >= g[g[i].col[j]].x))
+                        {
+                            int u = i;
+                            int v = g[g[i].col[j]].index;
+                            g[u].col.Remove(v);
+                            g[v].col.Remove(g[u].index);
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public void clear()
+        {
+            gr.clearPicture();
+            g.Clear();
+        }
+
         public void clearPicture()
         {
             gr.clearPicture();
@@ -274,20 +316,24 @@ namespace graf
 
         public void drawGraph()
         {
+            bool[,] matrix = new bool[g.Count, g.Count];
+
             for(int i = 0; i < g.Count; ++i)
             {
-                for(int j = 0; j < g[i].col.Count; ++j)
+                for (int j = 0; j < g[i].col.Count; ++j)
                 {
-                    if (i != j)
+                    if (!matrix[g[i].index, g[j].index] )
                     {
-                        gr.drawEdge(g[i], g[j], i, j);
+                        gr.drawEdge(g[i], g[g[i].col[j]], g[i].index, g[g[i].col[j]].index);
+                        matrix[g[i].index, g[g[i].col[j]].index] = true;
+                        matrix[g[g[i].col[j]].index, g[i].index] = true;
                     }
                 }
             }
 
             for(int i = 0; i < g.Count; ++i)
             {
-                drawVertex(g[i].x, g[i].y);
+                drawVertex(g[i].x, g[i].y, g[i].index + 1);
             }
         }
     }

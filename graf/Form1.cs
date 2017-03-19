@@ -57,6 +57,15 @@ namespace graf
                 fs.clearPicture();
                 fs.drawGraph();
             }
+            else if (!delEdge.Enabled)
+            {
+                var pt = this.PointToClient(Cursor.Position);
+                if (fs.delEdge(pt))
+                {
+                    fs.clearPicture();
+                    fs.drawGraph();
+                }
+            }
         }
         private void view_Click(object sender, EventArgs e)
         {
@@ -122,8 +131,14 @@ namespace graf
             delVertex.Enabled = true;
             delEdge.Enabled = true;
             delGraph.Enabled = true;
-            MessageBox.Show("to4NO");
-            fs.clearPicture();
+
+            const string message = "Вы действительно хотите полностью удалить граф?";
+            const string caption = "Удаление";
+            var MBSave = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (MBSave == DialogResult.Yes)
+            {
+                fs.clear();
+            }
         }
 
         private void dfs_Click(object sender, EventArgs e)
