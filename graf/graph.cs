@@ -139,7 +139,8 @@ namespace graf
                     //delVertex(v, f[i]);
                     f[i].col.Remove(v); //иначе эта конструкция
                 }
-                f.Remove(f[v]);
+                f[v].col.Clear();
+                f.RemoveAt(v);
                 return f;
             }
         }
@@ -274,6 +275,11 @@ namespace graf
         public void delVertex(int v)
         {
             g = g[v].delVertex(v, g);
+            for(int i = 0; i < g.Count; ++i)
+            {
+                if (g[i].index != i)
+                    g[i].index = i;
+            }
         }
 
         public bool delEdge(Point pt)
@@ -322,7 +328,7 @@ namespace graf
             {
                 for (int j = 0; j < g[i].col.Count; ++j)
                 {
-                    if (!matrix[g[i].index, g[j].index] )
+                    if (!matrix[g[i].index, g[g[i].col[j]].index] )
                     {
                         gr.drawEdge(g[i], g[g[i].col[j]], g[i].index, g[g[i].col[j]].index);
                         matrix[g[i].index, g[g[i].col[j]].index] = true;
