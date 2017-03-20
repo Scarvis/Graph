@@ -206,5 +206,20 @@ namespace graf
                 this.Close();
             }
         }
+
+        private void saveFile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void back_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void forward_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
