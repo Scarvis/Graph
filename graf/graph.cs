@@ -183,7 +183,8 @@ namespace graf
 
         public bool addVertex(Point point)
         {
-            if (getHitVertex(point) == -1)
+            int noDuplicateVertex = 3;
+            if (getHitVertex(point, noDuplicateVertex) == -1)
             {
                 g.Add(new vertex(point.X, point.Y));
                 g[g.Count - 1].index = g.Count - 1;
@@ -191,7 +192,7 @@ namespace graf
             }
             else
             {
-                //TODO: вершина уже есть
+                // вершина уже есть
                 return false;
             }
         }
@@ -238,11 +239,15 @@ namespace graf
             return isCheck;
         }
 
-        public int getHitVertex(Point pt)
+        // если нажата левая кнопка мышка, проверяем попали ли мы в вершину
+        public int getHitVertex(Point pt, int defaultArc = 1)
         {
             for (int i = 0; i < g.Count; i++)
             {
-                if (Math.Pow((g[i].x - pt.X), 2) + Math.Pow((g[i].y - pt.Y), 2) <= gr.radius )
+                if (Math.Pow((g[i].x - pt.X), 2) + Math.Pow((g[i].y - pt.Y), 2) <=
+                    //gr.radius * gr.radius если что то не работает, то используем эту формулу
+                    Math.Pow(gr.radius, 2) * defaultArc
+                    )
                 {
                     return i;
                 }
