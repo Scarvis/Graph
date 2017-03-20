@@ -30,9 +30,9 @@ namespace graf
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            var point = pictureBox1.PointToClient(Cursor.Position);
             if (!vertex.Enabled)
             {
-                var point = this.PointToClient(Cursor.Position);
                 fs.addVertex(point);
                 fs.drawVertex(
                     point.X,
@@ -42,12 +42,10 @@ namespace graf
             }
             else if(!edge.Enabled)
             {
-                var point = this.PointToClient(Cursor.Position);
                 fs.hitVertex(point);
             }
             else if(!delVertex.Enabled)
             {
-                var point = this.PointToClient(Cursor.Position);
                 int v = fs.getHitVertex(point);
                 if (v == -1)
                 {
@@ -59,8 +57,7 @@ namespace graf
             }
             else if (!delEdge.Enabled)
             {
-                var pt = this.PointToClient(Cursor.Position);
-                if (fs.delEdge(pt))
+                if (fs.delEdge(point))
                 {
                     fs.clearPicture();
                     fs.drawGraph();

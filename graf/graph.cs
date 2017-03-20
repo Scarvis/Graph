@@ -57,15 +57,15 @@ namespace graf
             public void drawSelectedVertex(int x,int y)
             {
                 int R = radius;
-                gr.DrawEllipse(redPen, (x - 2 * R), (y - Convert.ToInt16(2 * R - R / 2)), 2 * R, 2 * R);
+                gr.DrawEllipse(redPen, (x - R), (y - R), 2 * R, 2 * R);
             }
 
             public void drawVertex(int x, int y, int lastVertex, int R = 20)
             {
-                gr.FillEllipse(Brushes.White, (x - 2 * R), (y - Convert.ToInt16(2 * R - R / 2)), 2 * R, 2 * R);
-                gr.DrawEllipse(blackPen, (x - 2 * R), (y - Convert.ToInt16(2 * R - R / 2)), 2 * R, 2 * R);
+                gr.FillEllipse(Brushes.White, (x - R), (y - R), 2 * R, 2 * R);
+                gr.DrawEllipse(blackPen, (x - R), (y - R), 2 * R, 2 * R);
                 point = new PointF(x - 9, y - 9);
-                gr.DrawString(Convert.ToString(lastVertex), fo, br, point.X - R, point.Y - (R / 2) - R / 10);
+                gr.DrawString(Convert.ToString(lastVertex), fo, br, point);
             }
 
             /*
@@ -73,10 +73,7 @@ namespace graf
              */
             public void drawVertexs(int x, int y, int lastVertex, int R = 20)
             {
-                gr.FillEllipse(Brushes.White, (x - R), (y - R), 2 * R, 2 * R);
-                gr.DrawEllipse(blackPen, (x - R), (y - R), 2 * R, 2 * R);
-                point = new PointF(x - 9, y - 9);
-                gr.DrawString(Convert.ToString(lastVertex), fo, br, point);
+
             }
 
             public void drawEdge
@@ -89,10 +86,10 @@ namespace graf
             {
                 gr.DrawLine(
                     blackPen
-                    , v1.x-2
-                    , v1.y -2
-                    , v2.x -2
-                    , v2.y -2
+                    , v1.x
+                    , v1.y 
+                    , v2.x 
+                    , v2.y 
                     );
                 drawVertex(v1.x, v1.y, v1.index + 1);
                 drawVertex(v2.x, v2.y, v2.index + 1);
@@ -136,8 +133,14 @@ namespace graf
             {
                 foreach (int i in f[v].col)
                 {
-                    //delVertex(v, f[i]);
                     f[i].col.Remove(v); //иначе эта конструкция
+                    for(int j = 0; j < f[i].col.Count; ++j)
+                    {
+                        if(f[i].col[j]>v)
+                        {
+                            f[i].col[j]--;
+                        }
+                    }
                 }
                 f[v].col.Clear();
                 f.RemoveAt(v);
