@@ -143,7 +143,7 @@ namespace graf
             view.Enabled = true;
             vertex.Enabled = true;
             edge.Enabled = true;
-            dfs.Enabled = false;
+            dfs.Enabled = true;
             delVertex.Enabled = true;
             delEdge.Enabled = true;
             delGraph.Enabled = true;
@@ -156,6 +156,26 @@ namespace graf
             {
                 textBox1.Text = "НЕСВЯЗНЫЙ ГРАФ";
             }
+        }
+
+        private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void serviceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

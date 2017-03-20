@@ -134,9 +134,9 @@ namespace graf
                 foreach (int i in f[v].col)
                 {
                     f[i].col.Remove(v); //иначе эта конструкция
-                    for(int j = 0; j < f[i].col.Count; ++j)
+                    for (int j = f[i].col.Count - 1; j >= 0; --j)
                     {
-                        if(f[i].col[j]>v)
+                        if (f[i].col[j] >= v)
                         {
                             f[i].col[j]--;
                         }
@@ -257,7 +257,9 @@ namespace graf
                     isCheck = false;
                 }
                 if (!used[i])
+                {
                     dfs(i, used);
+                }
             }
             return isCheck;
         }
