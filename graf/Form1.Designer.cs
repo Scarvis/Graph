@@ -63,11 +63,8 @@
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.параметрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.содержаниеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.индексToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.поискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.опрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aProgrammToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -265,6 +262,7 @@
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.выходToolStripMenuItem.Text = "Вы&ход";
+            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
             // changeToolStripMenuItem
             // 
@@ -363,44 +361,24 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.содержаниеToolStripMenuItem,
-            this.индексToolStripMenuItem,
-            this.поискToolStripMenuItem,
             this.toolStripSeparator5,
-            this.опрограммеToolStripMenuItem});
+            this.aProgrammToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.aboutToolStripMenuItem.Text = "Спра&вка";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // содержаниеToolStripMenuItem
-            // 
-            this.содержаниеToolStripMenuItem.Name = "содержаниеToolStripMenuItem";
-            this.содержаниеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.содержаниеToolStripMenuItem.Text = "&Содержание";
-            // 
-            // индексToolStripMenuItem
-            // 
-            this.индексToolStripMenuItem.Name = "индексToolStripMenuItem";
-            this.индексToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.индексToolStripMenuItem.Text = "&Индекс";
-            // 
-            // поискToolStripMenuItem
-            // 
-            this.поискToolStripMenuItem.Name = "поискToolStripMenuItem";
-            this.поискToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.поискToolStripMenuItem.Text = "&Поиск";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(155, 6);
             // 
-            // опрограммеToolStripMenuItem
+            // aProgrammToolStripMenuItem
             // 
-            this.опрограммеToolStripMenuItem.Name = "опрограммеToolStripMenuItem";
-            this.опрограммеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.опрограммеToolStripMenuItem.Text = "&О программе...";
+            this.aProgrammToolStripMenuItem.Name = "aProgrammToolStripMenuItem";
+            this.aProgrammToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.aProgrammToolStripMenuItem.Text = "&О программе...";
+            this.aProgrammToolStripMenuItem.Click += new System.EventHandler(this.aProgrammToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -465,11 +443,8 @@
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem параметрыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem содержаниеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem индексToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem поискToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem опрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aProgrammToolStripMenuItem;
     }
 }
 

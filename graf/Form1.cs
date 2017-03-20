@@ -177,5 +177,34 @@ namespace graf
         {
 
         }
+
+        private void aProgrammToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            const string caption = "О программе";
+            const string message = 
+  "              Программа для построения графов"
++ "               \n\n"
++ "              Автор:"
++ "            \n\n"
++ "              Бадаев Михаил"
++ "                \n\n"
++ "              2017 год";
+            var aboutProg = MessageBox.Show(
+                message
+                , caption
+                
+                );
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            const string message = "Вы действительно хотите выйти?";
+            const string caption = "Выход";
+            var MBSave = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (MBSave == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
     }
 }
