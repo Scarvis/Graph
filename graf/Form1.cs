@@ -18,7 +18,7 @@ namespace graf
             
         }
 
-        graph fs; //граф и рисование графа
+        graph fs;   //граф и рисование графа
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -33,12 +33,13 @@ namespace graf
             var point = pictureBox1.PointToClient(Cursor.Position);
             if (!vertex.Enabled)
             {
-                fs.addVertex(point);
-                fs.drawVertex(
-                    point.X,
-                    point.Y
-                    );
-                textBox1.Text = point.ToString();   //DEBUG
+                if (fs.addVertex(point))
+                {
+                    fs.drawVertex(
+                        point.X,
+                        point.Y
+                        );
+                }
             }
             else if(!edge.Enabled)
             {
@@ -147,7 +148,6 @@ namespace graf
             delVertex.Enabled = true;
             delEdge.Enabled = true;
             delGraph.Enabled = true;
-
             if (fs.connected())
             {
                 textBox1.Text = "СВЯЗНЫЙ ГРАФ";

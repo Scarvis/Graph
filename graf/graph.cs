@@ -181,10 +181,19 @@ namespace graf
             return gr.getBitmap();
         }
 
-        public void addVertex(Point point)
+        public bool addVertex(Point point)
         {
-            g.Add(new vertex(point.X, point.Y));
-            g[g.Count - 1].index = g.Count - 1;
+            if (getHitVertex(point) == -1)
+            {
+                g.Add(new vertex(point.X, point.Y));
+                g[g.Count - 1].index = g.Count - 1;
+                return true;
+            }
+            else
+            {
+                //TODO: вершина уже есть
+                return false;
+            }
         }
 
         public void drawVertex(int x, int y, int indexVertex = -2)
@@ -199,6 +208,7 @@ namespace graf
             }
         }
 
+        // соединение 2 вершин ребром
         public bool hitVertex
             (
             Point point //текущие координаты курсора мыши
@@ -232,7 +242,7 @@ namespace graf
         {
             for (int i = 0; i < g.Count; i++)
             {
-                if (Math.Pow((g[i].x - pt.X), 2) + Math.Pow((g[i].y - pt.Y), 2) <= gr.radius * gr.radius)
+                if (Math.Pow((g[i].x - pt.X), 2) + Math.Pow((g[i].y - pt.Y), 2) <= gr.radius )
                 {
                     return i;
                 }
