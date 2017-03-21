@@ -136,7 +136,7 @@ namespace graf
                     f[i].col.Remove(v); //иначе эта конструкция
                     for (int j = f[i].col.Count - 1; j >= 0; --j)
                     {
-                        if (f[i].col[j] >= v)
+                        if (f[i].col[j] >= v + 1)
                         {
                             f[i].col[j]--;
                         }

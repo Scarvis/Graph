@@ -18,6 +18,8 @@ namespace graf
             
         }
 
+        public bool isTreeOrGraph = false;
+        public bool closeForm = true;
         graph fs;   //граф и рисование графа
 
         private void Form1_Load(object sender, EventArgs e)
@@ -26,6 +28,7 @@ namespace graf
             fs = new graph(
                             asd
                             );
+            isTreeOrGraph = false;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -65,6 +68,7 @@ namespace graf
                 }
             }
         }
+
         private void view_Click(object sender, EventArgs e)
         {
             view.Enabled = false;
@@ -182,7 +186,7 @@ namespace graf
         {
             const string caption = "О программе";
             const string message = 
-  "              Программа для построения графов"
+  "              Программа для построения графов и деревьев"
 + "               \n\n"
 + "              Автор:"
 + "            \n\n"
@@ -220,6 +224,17 @@ namespace graf
         private void forward_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void деревоToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isTreeOrGraph = true;
+            this.Close();
+        }
+
+        public void close()
+        {
+            isTreeOrGraph = false;
         }
     }
 }

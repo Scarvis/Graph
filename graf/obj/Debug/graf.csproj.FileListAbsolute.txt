@@ -7,3 +7,4 @@ C:\Users\User\Desktop\Программы\graf\graf\obj\Debug\graf.Properties.Res
 C:\Users\User\Desktop\Программы\graf\graf\obj\Debug\graf.csproj.GenerateResource.Cache
 C:\Users\User\Desktop\Программы\graf\graf\obj\Debug\graf.exe
 C:\Users\User\Desktop\Программы\graf\graf\obj\Debug\graf.pdb
+C:\Users\User\Desktop\Программы\graf\graf\obj\Debug\graf.treeForm.resources
