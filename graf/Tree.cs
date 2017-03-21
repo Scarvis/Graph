@@ -15,6 +15,9 @@ namespace graf
         public treeForm()
         {
             InitializeComponent();
+            //Panel panel1 = new Panel();
+            //panel1.AutoScroll = true;
+            //pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
         }
 
         public bool isTreeOrGraph = false;
@@ -69,6 +72,7 @@ namespace graf
             if(int.TryParse(temp,out number))
             {
                 number = int.Parse(temp);
+                inputNodeBox.Text = "";
             }
             else
             {
@@ -79,6 +83,11 @@ namespace graf
 
             avlTree.addNode(number);
             avlTree.drawTree();
+        }
+
+        private void deleteTree_Click(object sender, EventArgs e)
+        {
+            avlTree.clear();
         }
     }
 }

@@ -61,8 +61,8 @@ namespace graf
                     , x2
                     , y2
                     );
-                drawVertex(x1, y1, indexv1 + 1);
-                drawVertex(x2, y2, indexv2 + 1);
+                drawVertex(x1, y1, indexv1);
+                drawVertex(x2, y2, indexv2);
             }
 
             public void clearPicture()
@@ -147,12 +147,10 @@ namespace graf
             public int height, width;
             public int Count = 0;
             List<node> avlTree = new List<node>();
-            node errorWithFind = new node(-777, -777, -777);
-            node root;
+            node root = new node(-777, -777, -777);
 
             public binaryTree()
             {
-                root = errorWithFind;
             }
 
             public binaryTree(node unit)
@@ -171,25 +169,22 @@ namespace graf
             public node find(int value, node finder = null, node parent = null)
             {
                 int v = 0;
-                if (finder.value == -1 && finder != null)
+                if (finder == null)
                 {
                     int u = parent.index;
                     int x = avlTree[u].x;
-                    int y = avlTree[u].y;
-                    if (x <= root.x)
+                    int y = avlTree[u].y + 60;
+                    if (value < parent.value)
                     {
                         x /= 2;
-                        y += 10;
                     }
                     else
                     {
                         x += x / 2;
-                        y += 10;
                     }
-                    finder.value = value;
-                    finder.x = x;
-                    finder.y = y;
+                    finder = new node(x, y, value);
                     finder.parent = parent;
+                    finder.index = avlTree.Count;
                     if (value < parent.value)
                     {
                         parent.leftSon = finder;
@@ -204,59 +199,42 @@ namespace graf
                 if (value > avlTree[v].value)
                 {
                     avlTree[v].incrementHeightRightSon();
-                    if (finder != null)
-                        return find(
-                            value
-                            ,avlTree[v].getRightSon()
-                            ,root
-                            );
-                    else
-                        return find(
-                            value
-                            , avlTree[v].getRightSon()
-                            , finder
-                            );
+                    return find(
+                       value
+                       , avlTree[v].getRightSon()
+                       , finder
+                       );
                 }
                 else if (value < avlTree[v].value)
                 {
                     avlTree[v].incrementHeightLeftSon();
-                    if (finder != null)
-                    {
-                        return find(
-                            value,
-                            avlTree[v].getLeftSon()
-                            , root
-                            );
-                    }
-                    else
-                    {
-                        return find(
-                            value,
-                            avlTree[v].getLeftSon()
-                            , finder
-                            );
-                    }
+                    return find(
+                        value,
+                        avlTree[v].getLeftSon()
+                        , finder
+                        );
+                    
                 }
                 else
                 {
-                    return errorWithFind;
+                    return new node(-777, -777, -777); 
                 }
             }
 
             public bool addNode(int value)
             {
-                if (root == errorWithFind)
+                if (root.isError())
                 {
                     root.x = height / 2;
-                    root.y = 10;
+                    root.y = 20;
                     root.value = value;
                     root.index = 0;
                     avlTree.Add(root);
                     return true;
                 }
-                node flag = find(value);
+                node flag = find(value, root);
 
-                if (flag == errorWithFind)
+                if (flag.isError())
                 {
                     return false;
                 }
@@ -264,6 +242,13 @@ namespace graf
                 avlTree.Add(flag);
                 Count++;
                 return true;
+            }
+
+            public void clear()
+            {
+                avlTree.Clear();
+                root = new node(-777, -777, -777);
+                Count = 0;
             }
 
             public List<node> getListTree()
@@ -286,6 +271,42 @@ namespace graf
             return avlTree.addNode(value);
         }
 
+        public void clear()
+        {
+            avlTree.clear();
+            graphics.clearPicture();
+        }
+
+        //
+        private void drawEdgesFromDrawTree(binaryTree.node v)
+        {
+            if (v == null) return;
+            if (v.leftSon != null)
+                graphics.drawEdge(
+                    v.x, 
+                    v.y,
+                    v.leftSon.x,
+                    v.leftSon.y,
+                    v.value,
+                    v.leftSon.value
+                    );
+            drawEdgesFromDrawTree(v.leftSon);
+            if (v.rightSon != null)
+            {
+                graphics.drawEdge(
+                    v.x, 
+                    v.y,
+                    v.rightSon.x,
+                    v.rightSon.y,
+                    v.value,
+                    v.rightSon.value
+                    );
+                drawEdgesFromDrawTree(v.rightSon);
+            }
+            
+            
+        }
+
         public void drawTree()
         {
             var temp = avlTree.getListTree();
@@ -294,7 +315,8 @@ namespace graf
             {
                 graphics.drawVertex(temp[i].x, temp[i].y, temp[i].value);
             }
-
+            if (temp.Count > 0)
+                drawEdgesFromDrawTree(temp[0]);
         }
     }
 }

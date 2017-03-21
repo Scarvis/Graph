@@ -57,9 +57,9 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox1.Location = new System.Drawing.Point(198, 27);
+            this.pictureBox1.Location = new System.Drawing.Point(195, 27);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(468, 390);
+            this.pictureBox1.Size = new System.Drawing.Size(460, 390);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -99,6 +99,7 @@
             this.deleteTree.TabIndex = 4;
             this.deleteTree.Text = "удалить\r\nдерево";
             this.deleteTree.UseVisualStyleBackColor = true;
+            this.deleteTree.Click += new System.EventHandler(this.deleteTree_Click);
             // 
             // menuStrip
             // 
@@ -111,7 +112,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(678, 24);
+            this.menuStrip.Size = new System.Drawing.Size(674, 24);
             this.menuStrip.TabIndex = 10;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -237,7 +238,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(678, 429);
+            this.ClientSize = new System.Drawing.Size(674, 429);
             this.Controls.Add(this.inputNodeTxt);
             this.Controls.Add(this.inputNodeBox);
             this.Controls.Add(this.menuStrip);
