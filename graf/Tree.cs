@@ -19,10 +19,17 @@ namespace graf
 
         public bool isTreeOrGraph = false;
         public bool closeForm = true;
+        treeCode avlTree;
 
         private void treeForm_Load(object sender, EventArgs e)
         {
             isTreeOrGraph = false;
+            Graphics asd = this.pictureBox1.CreateGraphics();
+            avlTree = new treeCode(
+                            asd
+                            , pictureBox1.Height
+                            , pictureBox1.Width
+                            );
         }
 
         private void деревоToolStripMenuItem_Click(object sender, EventArgs e)
@@ -35,6 +42,43 @@ namespace graf
             closeForm = true;
             isTreeOrGraph = true;
             this.Close();
+        }
+
+        private void aProgrammToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            const string caption = "О программе";
+            const string message =
+  "              Программа для построения деревьев и графов"
++ "               \n\n"
++ "              Автор:"
++ "            \n\n"
++ "              Бадаев Михаил"
++ "                \n\n"
++ "              2017 год";
+            var aboutProg = MessageBox.Show(
+                message
+                , caption
+
+                );
+        }
+
+        private void addVertex_Click(object sender, EventArgs e)
+        {
+            string temp = inputNodeBox.Text;
+            int number = 0;
+            if(int.TryParse(temp,out number))
+            {
+                number = int.Parse(temp);
+            }
+            else
+            {
+                MessageBox.Show("Некооректные данные");
+                inputNodeBox.Text = "";
+                return;
+            }
+
+            avlTree.addNode(number);
+            avlTree.drawTree();
         }
     }
 }

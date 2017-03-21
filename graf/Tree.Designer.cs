@@ -48,6 +48,8 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aProgrammToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inputNodeBox = new System.Windows.Forms.TextBox();
+            this.inputNodeTxt = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -55,9 +57,9 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox1.Location = new System.Drawing.Point(115, 32);
+            this.pictureBox1.Location = new System.Drawing.Point(198, 27);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(468, 297);
+            this.pictureBox1.Size = new System.Drawing.Size(468, 390);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -67,7 +69,7 @@
             this.view.Name = "view";
             this.view.Size = new System.Drawing.Size(94, 42);
             this.view.TabIndex = 1;
-            this.view.Text = "button1";
+            this.view.Text = "обзор";
             this.view.UseVisualStyleBackColor = true;
             // 
             // addVertex
@@ -76,8 +78,9 @@
             this.addVertex.Name = "addVertex";
             this.addVertex.Size = new System.Drawing.Size(94, 42);
             this.addVertex.TabIndex = 2;
-            this.addVertex.Text = "button2";
+            this.addVertex.Text = "добавить\r\nузел";
             this.addVertex.UseVisualStyleBackColor = true;
+            this.addVertex.Click += new System.EventHandler(this.addVertex_Click);
             // 
             // deleteVertex
             // 
@@ -85,7 +88,7 @@
             this.deleteVertex.Name = "deleteVertex";
             this.deleteVertex.Size = new System.Drawing.Size(94, 42);
             this.deleteVertex.TabIndex = 3;
-            this.deleteVertex.Text = "button3";
+            this.deleteVertex.Text = "удалить\r\nузел";
             this.deleteVertex.UseVisualStyleBackColor = true;
             // 
             // deleteTree
@@ -94,7 +97,7 @@
             this.deleteTree.Name = "deleteTree";
             this.deleteTree.Size = new System.Drawing.Size(94, 42);
             this.deleteTree.TabIndex = 4;
-            this.deleteTree.Text = "button4";
+            this.deleteTree.Text = "удалить\r\nдерево";
             this.deleteTree.UseVisualStyleBackColor = true;
             // 
             // menuStrip
@@ -108,7 +111,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(608, 24);
+            this.menuStrip.Size = new System.Drawing.Size(678, 24);
             this.menuStrip.TabIndex = 10;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -161,14 +164,14 @@
             // графToolStripMenuItem
             // 
             this.графToolStripMenuItem.Name = "графToolStripMenuItem";
-            this.графToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.графToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.графToolStripMenuItem.Text = "Граф";
             this.графToolStripMenuItem.Click += new System.EventHandler(this.графToolStripMenuItem_Click);
             // 
             // деревоToolStripMenuItem
             // 
             this.деревоToolStripMenuItem.Name = "деревоToolStripMenuItem";
-            this.деревоToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.деревоToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.деревоToolStripMenuItem.Text = "Дерево";
             this.деревоToolStripMenuItem.Click += new System.EventHandler(this.деревоToolStripMenuItem_Click);
             // 
@@ -212,12 +215,31 @@
             this.aProgrammToolStripMenuItem.Name = "aProgrammToolStripMenuItem";
             this.aProgrammToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.aProgrammToolStripMenuItem.Text = "&О программе...";
+            this.aProgrammToolStripMenuItem.Click += new System.EventHandler(this.aProgrammToolStripMenuItem_Click);
+            // 
+            // inputNodeBox
+            // 
+            this.inputNodeBox.Location = new System.Drawing.Point(109, 102);
+            this.inputNodeBox.Name = "inputNodeBox";
+            this.inputNodeBox.Size = new System.Drawing.Size(77, 20);
+            this.inputNodeBox.TabIndex = 12;
+            // 
+            // inputNodeTxt
+            // 
+            this.inputNodeTxt.AutoSize = true;
+            this.inputNodeTxt.Location = new System.Drawing.Point(111, 79);
+            this.inputNodeTxt.Name = "inputNodeTxt";
+            this.inputNodeTxt.Size = new System.Drawing.Size(74, 13);
+            this.inputNodeTxt.TabIndex = 13;
+            this.inputNodeTxt.Text = "введите узел\r\n";
             // 
             // treeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 386);
+            this.ClientSize = new System.Drawing.Size(678, 429);
+            this.Controls.Add(this.inputNodeTxt);
+            this.Controls.Add(this.inputNodeBox);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.deleteTree);
             this.Controls.Add(this.deleteVertex);
@@ -257,5 +279,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem aProgrammToolStripMenuItem;
+        private System.Windows.Forms.TextBox inputNodeBox;
+        private System.Windows.Forms.Label inputNodeTxt;
     }
 }
