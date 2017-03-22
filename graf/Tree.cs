@@ -30,8 +30,8 @@ namespace graf
             Graphics asd = this.pictureBox1.CreateGraphics();
             avlTree = new treeCode(
                             asd
-                            , pictureBox1.Height
                             , pictureBox1.Width
+                            , pictureBox1.Height
                             );
         }
 

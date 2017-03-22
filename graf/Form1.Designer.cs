@@ -44,6 +44,9 @@
             this.changeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отменадействияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отменадействияToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.графToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.деревоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.параметрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,9 +56,6 @@
             this.saveFile = new System.Windows.Forms.Button();
             this.back = new System.Windows.Forms.Button();
             this.forward = new System.Windows.Forms.Button();
-            this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.графToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.деревоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -205,6 +205,28 @@
             this.отменадействияToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
             this.отменадействияToolStripMenuItem1.Text = "&Отмена действия";
             // 
+            // видToolStripMenuItem
+            // 
+            this.видToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.графToolStripMenuItem,
+            this.деревоToolStripMenuItem});
+            this.видToolStripMenuItem.Name = "видToolStripMenuItem";
+            this.видToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.видToolStripMenuItem.Text = "Вид";
+            // 
+            // графToolStripMenuItem
+            // 
+            this.графToolStripMenuItem.Name = "графToolStripMenuItem";
+            this.графToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.графToolStripMenuItem.Text = "Граф";
+            // 
+            // деревоToolStripMenuItem
+            // 
+            this.деревоToolStripMenuItem.Name = "деревоToolStripMenuItem";
+            this.деревоToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.деревоToolStripMenuItem.Text = "Дерево";
+            this.деревоToolStripMenuItem.Click += new System.EventHandler(this.деревоToolStripMenuItem_Click);
+            // 
             // serviceToolStripMenuItem
             // 
             this.serviceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -279,28 +301,6 @@
             this.forward.TabIndex = 12;
             this.forward.UseVisualStyleBackColor = true;
             this.forward.Click += new System.EventHandler(this.forward_Click);
-            // 
-            // видToolStripMenuItem
-            // 
-            this.видToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.графToolStripMenuItem,
-            this.деревоToolStripMenuItem});
-            this.видToolStripMenuItem.Name = "видToolStripMenuItem";
-            this.видToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.видToolStripMenuItem.Text = "Вид";
-            // 
-            // графToolStripMenuItem
-            // 
-            this.графToolStripMenuItem.Name = "графToolStripMenuItem";
-            this.графToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.графToolStripMenuItem.Text = "Граф";
-            // 
-            // деревоToolStripMenuItem
-            // 
-            this.деревоToolStripMenuItem.Name = "деревоToolStripMenuItem";
-            this.деревоToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.деревоToolStripMenuItem.Text = "Дерево";
-            this.деревоToolStripMenuItem.Click += new System.EventHandler(this.деревоToolStripMenuItem_Click);
             // 
             // Form1
             // 

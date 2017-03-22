@@ -26,7 +26,7 @@ namespace graf
                 blackPen.Width = 2;
                 redPen = new Pen(Color.Red);
                 redPen.Width = 2;
-                fo = new Font("Arial", 15);
+                fo = new Font("Arial", 12);
                 br = Brushes.Black;
             }
 
@@ -41,7 +41,8 @@ namespace graf
                 gr.FillEllipse(Brushes.White, (x - R), (y - R), 2 * R, 2 * R);
                 gr.DrawEllipse(blackPen, (x - R), (y - R), 2 * R, 2 * R);
                 point = new PointF(x - 9, y - 9);
-                gr.DrawString(Convert.ToString(lastVertex), fo, br, point);
+                string buf = Convert.ToString(lastVertex);
+                gr.DrawString(buf, fo, br, point.X - (buf.Count<char>()) * 2, point.Y);
             }
 
             public void drawEdge
@@ -78,7 +79,7 @@ namespace graf
                 public int x, y;
                 public int value;
                 public int index;
-
+                public int heightNode = 0;
                 int heightLeftSon = 0, heightRightSon = 0;
                 public node leftSon, rightSon, parent;
 
@@ -166,7 +167,7 @@ namespace graf
                 avlTree.Add(root);
             }
 
-            public node find(int value, node finder = null, node parent = null)
+            public node find(int value, node finder = null, node parent = null, int hNode = 0)
             {
                 int v = 0;
                 if (finder == null)
@@ -176,15 +177,16 @@ namespace graf
                     int y = avlTree[u].y + 60;
                     if (value < parent.value)
                     {
-                        x /= 2;
+                        x -= 300 - hNode * 40;
                     }
                     else
                     {
-                        x += x / 2;
+                        x += 300 - hNode * 40;
                     }
                     finder = new node(x, y, value);
                     finder.parent = parent;
                     finder.index = avlTree.Count;
+                    finder.heightNode = hNode;
                     if (value < parent.value)
                     {
                         parent.leftSon = finder;
@@ -195,7 +197,8 @@ namespace graf
                     }
                     return finder;
                 }
-                if (finder != null) v = finder.index;
+                v = finder.index;
+                hNode++;
                 if (value > avlTree[v].value)
                 {
                     avlTree[v].incrementHeightRightSon();
@@ -203,6 +206,7 @@ namespace graf
                        value
                        , avlTree[v].getRightSon()
                        , finder
+                       , hNode
                        );
                 }
                 else if (value < avlTree[v].value)
@@ -212,6 +216,7 @@ namespace graf
                         value,
                         avlTree[v].getLeftSon()
                         , finder
+                        , hNode
                         );
                     
                 }
@@ -259,6 +264,7 @@ namespace graf
 
         graphicsTree graphics;
         binaryTree avlTree = new binaryTree();
+
         public treeCode(Graphics grafouni, int h, int w)
         {
             graphics = new graphicsTree(grafouni);
@@ -277,20 +283,22 @@ namespace graf
             graphics.clearPicture();
         }
 
-        //
+        //рекурсия для рисования линий
         private void drawEdgesFromDrawTree(binaryTree.node v)
         {
             if (v == null) return;
             if (v.leftSon != null)
+            {
                 graphics.drawEdge(
-                    v.x, 
-                    v.y,
-                    v.leftSon.x,
-                    v.leftSon.y,
-                    v.value,
-                    v.leftSon.value
-                    );
-            drawEdgesFromDrawTree(v.leftSon);
+                   v.x,
+                   v.y,
+                   v.leftSon.x,
+                   v.leftSon.y,
+                   v.value,
+                   v.leftSon.value
+                   );
+                drawEdgesFromDrawTree(v.leftSon);
+            }
             if (v.rightSon != null)
             {
                 graphics.drawEdge(
@@ -303,8 +311,6 @@ namespace graf
                     );
                 drawEdgesFromDrawTree(v.rightSon);
             }
-            
-            
         }
 
         public void drawTree()

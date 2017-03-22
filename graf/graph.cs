@@ -68,14 +68,6 @@ namespace graf
                 gr.DrawString(Convert.ToString(lastVertex), fo, br, point);
             }
 
-            /*
-             * for debug
-             */
-            public void drawVertexs(int x, int y, int lastVertex, int R = 20)
-            {
-
-            }
-
             public void drawEdge
                 (
                 vertex v1
@@ -84,15 +76,51 @@ namespace graf
                 ,int indexv2
                 )
             {
+                Pen lineS = new Pen(Color.Black, 4)
+                {
+                    StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
+                    ,
+                    EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
+                };
+                PointF bufPt2 = new PointF(v1.x, v1.y);
+                var pt2 = crossPoint(bufPt2, new PointF(v2.x, v2.y), 20);
+                PointF bufPt1 = new PointF(v2.x, v2.y);
+                var pt1 = crossPoint(bufPt1, new PointF(v1.x, v1.y), 20);
                 gr.DrawLine(
-                    blackPen
-                    , v1.x
-                    , v1.y 
-                    , v2.x 
-                    , v2.y 
+                    lineS
+                    , pt1
+                    , pt2
                     );
+                //gr.DrawLine(
+                //    blackPen
+                //    , v1.x
+                //    , v1.y 
+                //    , v2.x 
+                //    , v2.y 
+                //    );
                 drawVertex(v1.x, v1.y, v1.index + 1);
                 drawVertex(v2.x, v2.y, v2.index + 1);
+            }
+            /// <summary>
+            /// Вычисление точки пересечения с окружностью
+            /// </summary>
+            /// <param name="startPt">Первая точка отрезка</param>
+            /// <param name="center">Центр окружности</param>
+            /// <param name="r">Радиус окружности</param>
+            /// http://www.cyberforum.ru/windows-forms/thread1049744.html
+            /// оригинал
+            private PointF crossPoint(PointF startPt, PointF center, float r)
+            {
+                PointF result = new Point();
+                float signX, signY, deltaX, deltaY;
+                signX = Math.Sign(center.X - startPt.X);
+                signY = Math.Sign(center.Y - startPt.Y);
+                float k = Math.Abs((center.Y - startPt.Y) / (center.X - startPt.X));
+                deltaY = r * (float)Math.Sin(Math.Atan(k));
+                deltaX = r * (float)Math.Cos(Math.Atan(k));
+                result.X = center.X - (signX * deltaX);
+                result.Y = center.Y - (signY * deltaY);
+                return result;
             }
 
             public void clearPicture()
