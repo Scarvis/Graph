@@ -276,42 +276,41 @@ namespace graf
             XmlDocument doc = new XmlDocument();
             XmlDeclaration XmlDec = doc.CreateXmlDeclaration("1.0", "utf-8", null);
             doc.AppendChild(XmlDec);
-            XmlElement root = doc.CreateElement("vertex"); 
-
-            XmlElement abc = doc.CreateElement("number");
-            XmlAttribute rootAtr = doc.CreateAttribute("index");
-            XmlText rootTxt = doc.CreateTextNode(g[0].index.ToString());
-
-            XmlElement curX = doc.CreateElement("x");
-            XmlElement curY = doc.CreateElement("y");
-            XmlText xTxt = doc.CreateTextNode(g[0].x.ToString());
-            XmlText yTxt = doc.CreateTextNode(g[0].y.ToString());
-
-            XmlElement edges = doc.CreateElement("edges");
-            
-            for(int i = 0; i < g[0].col.Count; ++i)
+            XmlElement root = doc.CreateElement("vertex");
+            for (int i = 0; i < g.Count; ++i)
             {
-                XmlElement edge = doc.CreateElement("index");
-                edges.AppendChild(edge);
-                XmlAttribute edgeAtr = doc.CreateAttribute("value");
-                edge.Attributes.Append(edgeAtr);
-                XmlText edgeTxt = doc.CreateTextNode(g[0].col[i].ToString());
-                edgeAtr.AppendChild(edgeTxt);
+                XmlElement abc = doc.CreateElement("number");
+                XmlAttribute rootAtr = doc.CreateAttribute("index");
+                XmlText rootTxt = doc.CreateTextNode(g[i].index.ToString());
+
+                XmlElement curX = doc.CreateElement("x");
+                XmlElement curY = doc.CreateElement("y");
+                XmlText xTxt = doc.CreateTextNode(g[i].x.ToString());
+                XmlText yTxt = doc.CreateTextNode(g[i].y.ToString());
+
+                XmlElement edges = doc.CreateElement("edges");
+
+                for (int j = 0; j < g[i].col.Count; ++j)
+                {
+                    XmlElement edge = doc.CreateElement("index");
+                    edges.AppendChild(edge);
+                    XmlAttribute edgeAtr = doc.CreateAttribute("value");
+                    edge.Attributes.Append(edgeAtr);
+                    XmlText edgeTxt = doc.CreateTextNode(g[i].col[j].ToString());
+                    edgeAtr.AppendChild(edgeTxt);
+                }
+                rootAtr.AppendChild(rootTxt);
+                curX.AppendChild(xTxt);
+                curY.AppendChild(yTxt);
+
+                abc.Attributes.Append(rootAtr);
+                abc.AppendChild(curX);
+                abc.AppendChild(curY);
+                abc.AppendChild(edges);
+
+                root.AppendChild(abc);
+                doc.AppendChild(root);
             }
-
-
-            rootAtr.AppendChild(rootTxt);
-            curX.AppendChild(xTxt);
-            curY.AppendChild(yTxt);
-
-            abc.Attributes.Append(rootAtr);
-            abc.AppendChild(curX);
-            abc.AppendChild(curY);
-            abc.AppendChild(edges);
-
-            root.AppendChild(abc);
-            doc.AppendChild(root);
-
 
 
 
@@ -324,6 +323,47 @@ namespace graf
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 doc.Save(saveDialog.FileName);
+            }
+        }
+
+        private void bFSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load("tests/bfs test.xml");
+            XmlElement xRoot = xDoc.DocumentElement;
+            foreach (XmlNode xnode in xRoot)
+            {
+                if (xnode.Attributes.Count > 0)
+                {
+                    XmlNode attr = xnode.Attributes.GetNamedItem("index");
+                    if (attr != null)
+                        Console.WriteLine("index: {0}", attr.Value);
+                }
+                foreach (XmlNode childnode in xnode.ChildNodes)
+                {
+                    // если узел - company
+                    if (childnode.Name == "x")
+                    {
+                        Console.WriteLine("x: {0}", childnode.InnerText);
+                    }
+                    // если узел age
+                    else if (childnode.Name == "y")
+                    {
+                        Console.WriteLine("y: {0}", childnode.InnerText);
+                    }
+                    else if (childnode.Name == "edges")
+                    {
+                        foreach(XmlNode edge in childnode.ChildNodes)
+                        {
+                            if (edge.Attributes.Count > 0)
+                            {
+                                XmlNode attr = edge.Attributes.GetNamedItem("value");
+                                if (attr != null)
+                                    Console.WriteLine("edge index: {0}", attr.Value);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

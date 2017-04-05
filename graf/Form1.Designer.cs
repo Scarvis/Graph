@@ -332,6 +332,7 @@
             this.bFSToolStripMenuItem.Name = "bFSToolStripMenuItem";
             this.bFSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.bFSToolStripMenuItem.Text = "BFS";
+            this.bFSToolStripMenuItem.Click += new System.EventHandler(this.bFSToolStripMenuItem_Click);
             // 
             // сохранитьТестToolStripMenuItem
             // 
