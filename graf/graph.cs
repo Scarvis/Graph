@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Drawing;
 
 namespace graf
@@ -58,6 +58,12 @@ namespace graf
             {
                 int R = radius;
                 gr.DrawEllipse(redPen, (x - R), (y - R), 2 * R, 2 * R);
+            }
+
+            public void drawSelectedVertex(int x, int y, Pen pen)
+            {
+                int R = radius;
+                gr.DrawEllipse(pen, (x - R), (y - R), 2 * R, 2 * R);
             }
 
             public void drawVertex(int x, int y, int lastVertex, int R = 20)
@@ -164,7 +170,7 @@ namespace graf
                     f[i].col.Remove(v); //иначе эта конструкция
                     for (int j = f[i].col.Count - 1; j >= 0; --j)
                     {
-                        if (f[i].col[j] >= v + 1)
+                        if (f[i].col[j] >= v+1)
                         {
                             f[i].col[j]--;
                         }
@@ -254,6 +260,10 @@ namespace graf
                         v1 = i;
                         gr.drawSelectedVertex(g[i].x, g[i].y);
                     }
+                    else if (v1 == i)
+                    {
+                        continue;
+                    }
                     else if (v2 == -1)
                     {
                         v2 = i;
@@ -317,6 +327,68 @@ namespace graf
                 {
                     dfs(u, used);
                 }
+            }
+        }
+
+        public void bfs(int v)
+        {
+            Thread.Sleep(500);
+            List<bool> used = new List<bool>();
+            for(int i = 0; i < g.Count; i++)
+            {
+                used.Add(false);
+            }
+
+            used[v] = true;
+            gr.drawSelectedVertex(g[v].x, g[v].y);
+            Thread.Sleep(1500);
+            gr.drawSelectedVertex(g[v].x, g[v].y, new Pen(Color.Black, 2));
+            if (g[v].col.Count == 0)
+            {
+                return;
+            }
+
+            List<int> bufV = new List<int>();
+            for(int i = 0; i < g[v].col.Count; i++)
+            {
+                int u = g[v].col[i];
+                used[u] = true;
+                bufV.Add(u);
+                gr.drawSelectedVertex(g[u].x, g[u].y);
+            }
+
+            Thread.Sleep(1500);
+            Pen tempPen = new Pen(Color.Black);
+            tempPen.Width = 2;
+            for (int i = 0; i < bufV.Count; i++)
+            {
+                int u = bufV[i];
+                gr.drawSelectedVertex(g[u].x, g[u].y, tempPen);
+            }
+            while (bufV.Count > 0)
+            {
+                List<int> b = new List<int>();
+                for(int i = 0; i < bufV.Count; i++)
+                {
+                    for(int j = 0; j < g[bufV[i]].col.Count; j++)
+                    {
+                        int u = g[bufV[i]].col[j];
+                        if (!used[u])
+                        {
+                            b.Add(u);
+                            used[u] = true;
+                            gr.drawSelectedVertex(g[u].x, g[u].y);
+                        }
+                    }
+                }
+                for (int i = 0; i < bufV.Count; i++)
+                {
+                    int u = bufV[i];
+                    gr.drawSelectedVertex(g[u].x, g[u].y, tempPen);
+                }
+                if (b.Count > 0)
+                    Thread.Sleep(1500);
+                bufV = b;
             }
         }
 

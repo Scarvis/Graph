@@ -50,18 +50,22 @@
             this.aProgrammToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inputNodeBox = new System.Windows.Forms.TextBox();
             this.inputNodeTxt = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.listVertex = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox1.Location = new System.Drawing.Point(195, 27);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(762, 473);
+            this.pictureBox1.Size = new System.Drawing.Size(1456, 826);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // view
             // 
@@ -71,6 +75,7 @@
             this.view.TabIndex = 1;
             this.view.Text = "обзор";
             this.view.UseVisualStyleBackColor = true;
+            this.view.Click += new System.EventHandler(this.view_Click);
             // 
             // addVertex
             // 
@@ -90,6 +95,7 @@
             this.deleteVertex.TabIndex = 3;
             this.deleteVertex.Text = "удалить\r\nузел";
             this.deleteVertex.UseVisualStyleBackColor = true;
+            this.deleteVertex.Click += new System.EventHandler(this.deleteVertex_Click);
             // 
             // deleteTree
             // 
@@ -112,7 +118,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(969, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1169, 24);
             this.menuStrip.TabIndex = 10;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -234,11 +240,32 @@
             this.inputNodeTxt.TabIndex = 13;
             this.inputNodeTxt.Text = "введите узел\r\n";
             // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.BackColor = System.Drawing.SystemColors.Window;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(219, 32);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(938, 484);
+            this.panel1.TabIndex = 14;
+            // 
+            // listVertex
+            // 
+            this.listVertex.FormattingEnabled = true;
+            this.listVertex.Location = new System.Drawing.Point(109, 149);
+            this.listVertex.Name = "listVertex";
+            this.listVertex.Size = new System.Drawing.Size(76, 21);
+            this.listVertex.Sorted = true;
+            this.listVertex.TabIndex = 16;
+            // 
             // treeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(969, 512);
+            this.ClientSize = new System.Drawing.Size(1169, 558);
+            this.Controls.Add(this.listVertex);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.inputNodeTxt);
             this.Controls.Add(this.inputNodeBox);
             this.Controls.Add(this.menuStrip);
@@ -246,13 +273,13 @@
             this.Controls.Add(this.deleteVertex);
             this.Controls.Add(this.addVertex);
             this.Controls.Add(this.view);
-            this.Controls.Add(this.pictureBox1);
             this.Name = "treeForm";
             this.Text = "Tree";
             this.Load += new System.EventHandler(this.treeForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -282,5 +309,7 @@
         private System.Windows.Forms.ToolStripMenuItem aProgrammToolStripMenuItem;
         private System.Windows.Forms.TextBox inputNodeBox;
         private System.Windows.Forms.Label inputNodeTxt;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox listVertex;
     }
 }

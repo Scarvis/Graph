@@ -103,7 +103,6 @@ namespace graf
                     index = 0;
                 }
 
-
                 public node getLeftSon()
                 {
                     return leftSon;
@@ -167,7 +166,31 @@ namespace graf
                 avlTree.Add(root);
             }
 
-            public node find(int value, node finder = null, node parent = null, int hNode = 0)
+            public node findNode(int value, node finder = null, node parent = null)
+            {
+                if (finder == null)
+                {
+                    finder = root;
+                    if (finder.isError())
+                    {
+                        return new node(-777, -777, -777);
+                    }
+                }
+                if (value > finder.rightSon.value)
+                {
+                    return findNode(value, finder.rightSon, finder);
+                }
+                else if(value < finder.leftSon.value)
+                {
+                    return findNode(value, finder.leftSon, finder);
+                }
+                else
+                {
+                    return finder;
+                }
+            }
+
+            private node findAndAdd(int value, node finder = null, node parent = null, int hNode = 0)
             {
                 int v = 0;
                 if (finder == null)
@@ -177,11 +200,11 @@ namespace graf
                     int y = avlTree[u].y + 60;
                     if (value < parent.value)
                     {
-                        x -= 300 - hNode * 40;
+                        x -= 400 - hNode * 80;
                     }
                     else
                     {
-                        x += 300 - hNode * 40;
+                        x += 400 - hNode * 80;
                     }
                     finder = new node(x, y, value);
                     finder.parent = parent;
@@ -202,7 +225,7 @@ namespace graf
                 if (value > avlTree[v].value)
                 {
                     avlTree[v].incrementHeightRightSon();
-                    return find(
+                    return findAndAdd(
                        value
                        , avlTree[v].getRightSon()
                        , finder
@@ -212,7 +235,7 @@ namespace graf
                 else if (value < avlTree[v].value)
                 {
                     avlTree[v].incrementHeightLeftSon();
-                    return find(
+                    return findAndAdd(
                         value,
                         avlTree[v].getLeftSon()
                         , finder
@@ -237,7 +260,7 @@ namespace graf
                     avlTree.Add(root);
                     return true;
                 }
-                node flag = find(value, root);
+                node flag = findAndAdd(value, root);
 
                 if (flag.isError())
                 {
@@ -245,7 +268,7 @@ namespace graf
                 }
 
                 avlTree.Add(flag);
-                Count++;
+                ++Count;
                 return true;
             }
 
@@ -259,6 +282,29 @@ namespace graf
             public List<node> getListTree()
             {
                 return avlTree;
+            }
+
+            public bool delNode(int value)
+            {
+                node temp = findNode(value);
+                if (temp.isError())
+                {
+                    return false;
+                }
+                if (temp.leftSon == null && temp.rightSon == null)
+                {
+                    temp = null;
+                }
+                else if (temp.leftSon == null && temp.rightSon != null)
+                {
+                    temp = temp.leftSon;
+                }
+                else if (temp.leftSon != null && temp.rightSon == null)
+                {
+                    temp = temp.rightSon;
+                }
+
+                return true;
             }
         }
 
@@ -275,6 +321,11 @@ namespace graf
         public bool addNode(int value)
         {
             return avlTree.addNode(value);
+        }
+
+        public bool deleteNode(int value)
+        {
+            return avlTree.delNode(value);
         }
 
         public void clear()

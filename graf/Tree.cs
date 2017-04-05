@@ -15,9 +15,6 @@ namespace graf
         public treeForm()
         {
             InitializeComponent();
-            //Panel panel1 = new Panel();
-            //panel1.AutoScroll = true;
-            //pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
         }
 
         public bool isTreeOrGraph = false;
@@ -27,6 +24,9 @@ namespace graf
         private void treeForm_Load(object sender, EventArgs e)
         {
             isTreeOrGraph = false;
+            //Graphics asd = this.pictureBox1.CreateGraphics();
+
+            
             Graphics asd = this.pictureBox1.CreateGraphics();
             avlTree = new treeCode(
                             asd
@@ -69,7 +69,7 @@ namespace graf
         {
             string temp = inputNodeBox.Text;
             int number = 0;
-            if(int.TryParse(temp,out number))
+            if (int.TryParse(temp, out number))
             {
                 number = int.Parse(temp);
                 inputNodeBox.Text = "";
@@ -80,14 +80,63 @@ namespace graf
                 inputNodeBox.Text = "";
                 return;
             }
-
             avlTree.addNode(number);
             avlTree.drawTree();
+            listVertex.Items.Add(number.ToString());
         }
 
         private void deleteTree_Click(object sender, EventArgs e)
         {
-            avlTree.clear();
+            view.Enabled = true;
+            const string message = "Вы действительно хотите полностью удалить дерево?";
+            const string caption = "Удаление";
+            var MBSave = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (MBSave == DialogResult.Yes)
+            {
+                avlTree.clear();
+            }
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            view.Enabled = true;
+            avlTree.drawTree();
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            avlTree.drawTree();
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+            avlTree.drawTree();
+        }
+
+        private void deleteVertex_Click(object sender, EventArgs e)
+        {
+            view.Enabled = true;
+            var buf = listVertex.SelectedItem;
+            string s = buf.ToString();
+            int num = 0;
+            if (int.TryParse(s, out num))
+            {
+                num = int.Parse(s);
+                avlTree.deleteNode(num);
+            }
+            else
+            {
+                return;
+            }
+            
+        }
+
+        private void view_Click(object sender, EventArgs e)
+        {
+            view.Enabled = false;
+            deleteVertex.Enabled = true;
+        }
+
+        
     }
 }

@@ -44,11 +44,11 @@ namespace graf
                         );
                 }
             }
-            else if(!edge.Enabled)
+            else if (!edge.Enabled)
             {
                 fs.hitVertex(point);
             }
-            else if(!delVertex.Enabled)
+            else if (!delVertex.Enabled)
             {
                 int v = fs.getHitVertex(point);
                 if (v == -1)
@@ -67,6 +67,15 @@ namespace graf
                     fs.drawGraph();
                 }
             }
+            else if (!bfs.Enabled)
+            {
+                int v = fs.getHitVertex(point);
+                if (v != -1)
+                {
+                    fs.bfs(v);
+                    textBox1.Text = "BFS закончен";
+                }
+            }
         }
 
         private void view_Click(object sender, EventArgs e)
@@ -77,6 +86,7 @@ namespace graf
             dfs.Enabled = true;
             delVertex.Enabled = true;
             delEdge.Enabled = true;
+            bfs.Enabled = true;
             delGraph.Enabled = true;
         }
 
@@ -88,6 +98,7 @@ namespace graf
             dfs.Enabled = true;
             delVertex.Enabled = true;
             delEdge.Enabled = true;
+            bfs.Enabled = true;
             delGraph.Enabled = true;
         }
 
@@ -99,6 +110,7 @@ namespace graf
             dfs.Enabled = true;
             delVertex.Enabled = true;
             delEdge.Enabled = true;
+            bfs.Enabled = true;
             delGraph.Enabled = true;
         }
 
@@ -110,6 +122,7 @@ namespace graf
             dfs.Enabled = true;
             delVertex.Enabled = false;
             delEdge.Enabled = true;
+            bfs.Enabled = true;
             delGraph.Enabled = true;
         }
 
@@ -121,6 +134,7 @@ namespace graf
             dfs.Enabled = true;
             delVertex.Enabled = true;
             delEdge.Enabled = false;
+            bfs.Enabled = true;
             delGraph.Enabled = true;
         }
 
@@ -132,6 +146,7 @@ namespace graf
             dfs.Enabled = true;
             delVertex.Enabled = true;
             delEdge.Enabled = true;
+            bfs.Enabled = true;
             delGraph.Enabled = true;
 
             const string message = "Вы действительно хотите полностью удалить граф?";
@@ -152,6 +167,8 @@ namespace graf
             delVertex.Enabled = true;
             delEdge.Enabled = true;
             delGraph.Enabled = true;
+            bfs.Enabled = true;
+
             if (fs.connected())
             {
                 textBox1.Text = "СВЯЗНЫЙ ГРАФ";
@@ -235,6 +252,25 @@ namespace graf
         public void close()
         {
             isTreeOrGraph = false;
+        }
+
+        private void bfs_Click(object sender, EventArgs e)
+        {
+            view.Enabled = true;
+            vertex.Enabled = true;
+            edge.Enabled = true;
+            dfs.Enabled = true;
+            delVertex.Enabled = true;
+            delEdge.Enabled = true;
+            delGraph.Enabled = true;
+            bfs.Enabled = false;
+
+
+        }
+
+        private void сохранитьТестToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

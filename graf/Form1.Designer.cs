@@ -56,16 +56,21 @@
             this.saveFile = new System.Windows.Forms.Button();
             this.back = new System.Windows.Forms.Button();
             this.forward = new System.Windows.Forms.Button();
+            this.bfs = new System.Windows.Forms.Button();
+            this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bFSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сохранитьТестToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(665, 395);
+            this.textBox1.Location = new System.Drawing.Point(753, 371);
+            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(166, 20);
+            this.textBox1.Size = new System.Drawing.Size(144, 44);
             this.textBox1.TabIndex = 0;
             // 
             // pictureBox1
@@ -75,7 +80,7 @@
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.pictureBox1.Location = new System.Drawing.Point(24, 50);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(807, 307);
+            this.pictureBox1.Size = new System.Drawing.Size(873, 307);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -157,11 +162,12 @@
             this.changeToolStripMenuItem,
             this.видToolStripMenuItem,
             this.serviceToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.тестыToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(15, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(859, 24);
+            this.menuStrip.Size = new System.Drawing.Size(938, 24);
             this.menuStrip.TabIndex = 9;
             this.menuStrip.Text = "menuStrip1";
             this.menuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip_ItemClicked);
@@ -169,6 +175,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.сохранитьТестToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
@@ -302,12 +309,44 @@
             this.forward.UseVisualStyleBackColor = true;
             this.forward.Click += new System.EventHandler(this.forward_Click);
             // 
+            // bfs
+            // 
+            this.bfs.Location = new System.Drawing.Point(654, 371);
+            this.bfs.Name = "bfs";
+            this.bfs.Size = new System.Drawing.Size(84, 45);
+            this.bfs.TabIndex = 13;
+            this.bfs.Text = "BFS";
+            this.bfs.UseVisualStyleBackColor = true;
+            this.bfs.Click += new System.EventHandler(this.bfs_Click);
+            // 
+            // тестыToolStripMenuItem
+            // 
+            this.тестыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bFSToolStripMenuItem});
+            this.тестыToolStripMenuItem.Name = "тестыToolStripMenuItem";
+            this.тестыToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.тестыToolStripMenuItem.Text = "Тесты";
+            // 
+            // bFSToolStripMenuItem
+            // 
+            this.bFSToolStripMenuItem.Name = "bFSToolStripMenuItem";
+            this.bFSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bFSToolStripMenuItem.Text = "BFS";
+            // 
+            // сохранитьТестToolStripMenuItem
+            // 
+            this.сохранитьТестToolStripMenuItem.Name = "сохранитьТестToolStripMenuItem";
+            this.сохранитьТестToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.сохранитьТестToolStripMenuItem.Text = "Сохранить Тест";
+            this.сохранитьТестToolStripMenuItem.Click += new System.EventHandler(this.сохранитьТестToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(859, 428);
+            this.ClientSize = new System.Drawing.Size(938, 432);
+            this.Controls.Add(this.bfs);
             this.Controls.Add(this.forward);
             this.Controls.Add(this.back);
             this.Controls.Add(this.saveFile);
@@ -362,6 +401,10 @@
         private System.Windows.Forms.ToolStripMenuItem видToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem графToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem деревоToolStripMenuItem;
+        private System.Windows.Forms.Button bfs;
+        private System.Windows.Forms.ToolStripMenuItem тестыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bFSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сохранитьТестToolStripMenuItem;
     }
 }
 

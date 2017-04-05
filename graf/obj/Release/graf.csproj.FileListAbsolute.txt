@@ -7,3 +7,4 @@ C:\Users\User\Desktop\Программы\graf\graf\obj\Release\graf.csproj.Gener
 C:\Users\User\Desktop\Программы\graf\graf\obj\Release\graf.exe
 C:\Users\User\Desktop\Программы\graf\graf\obj\Release\graf.pdb
 C:\Users\User\Desktop\Программы\graf\graf\obj\Release\graf.treeForm.resources
+C:\Users\User\Desktop\Программы\graf\graf\obj\Release\graf.csprojResolveAssemblyReference.cache
