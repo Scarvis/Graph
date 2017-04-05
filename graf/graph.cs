@@ -135,7 +135,7 @@ namespace graf
             }
         }
 
-        class vertex
+        public class vertex
         {
             public List<int> col = new List<int>();
             public int x, y;
@@ -461,6 +461,11 @@ namespace graf
             {
                 drawVertex(g[i].x, g[i].y, g[i].index + 1);
             }
+        }
+
+        public List<vertex> getListGraph()
+        {
+            return g;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace graf
 {
@@ -270,7 +271,60 @@ namespace graf
 
         private void сохранитьТестToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var g = fs.getListGraph();
 
+            XmlDocument doc = new XmlDocument();
+            XmlDeclaration XmlDec = doc.CreateXmlDeclaration("1.0", "utf-8", null);
+            doc.AppendChild(XmlDec);
+            XmlElement root = doc.CreateElement("vertex"); 
+
+            XmlElement abc = doc.CreateElement("number");
+            XmlAttribute rootAtr = doc.CreateAttribute("index");
+            XmlText rootTxt = doc.CreateTextNode(g[0].index.ToString());
+
+            XmlElement curX = doc.CreateElement("x");
+            XmlElement curY = doc.CreateElement("y");
+            XmlText xTxt = doc.CreateTextNode(g[0].x.ToString());
+            XmlText yTxt = doc.CreateTextNode(g[0].y.ToString());
+
+            XmlElement edges = doc.CreateElement("edges");
+            
+            for(int i = 0; i < g[0].col.Count; ++i)
+            {
+                XmlElement edge = doc.CreateElement("index");
+                edges.AppendChild(edge);
+                XmlAttribute edgeAtr = doc.CreateAttribute("value");
+                edge.Attributes.Append(edgeAtr);
+                XmlText edgeTxt = doc.CreateTextNode(g[0].col[i].ToString());
+                edgeAtr.AppendChild(edgeTxt);
+            }
+
+
+            rootAtr.AppendChild(rootTxt);
+            curX.AppendChild(xTxt);
+            curY.AppendChild(yTxt);
+
+            abc.Attributes.Append(rootAtr);
+            abc.AppendChild(curX);
+            abc.AppendChild(curY);
+            abc.AppendChild(edges);
+
+            root.AppendChild(abc);
+            doc.AppendChild(root);
+
+
+
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Сохранить тест...";
+            saveDialog.OverwritePrompt = true;
+            saveDialog.CheckPathExists = true;
+            saveDialog.Filter = "XML-File | *.xml";
+            saveDialog.ShowHelp = true;
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                doc.Save(saveDialog.FileName);
+            }
         }
     }
 }

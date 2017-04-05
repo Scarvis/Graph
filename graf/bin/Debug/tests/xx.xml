@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vertex>
+  <number index="0">
+    <x>229</x>
+    <y>143</y>
+    <edges>
+      <index value="12" />
+    </edges>
+  </number>
+</vertex>
