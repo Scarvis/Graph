@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vertex max_size="6">
+  <number index="0">
+    <x>416</x>
+    <y>41</y>
+    <edges>
+      <index value="4" />
+      <index value="2" />
+      <index value="3" />
+      <index value="5" />
+    </edges>
+  </number>
+  <number index="1">
+    <x>218</x>
+    <y>134</y>
+    <edges>
+      <index value="2" />
+    </edges>
+  </number>
+  <number index="2">
+    <x>340</x>
+    <y>248</y>
+    <edges>
+      <index value="1" />
+      <index value="3" />
+      <index value="0" />
+      <index value="4" />
+    </edges>
+  </number>
+  <number index="3">
+    <x>544</x>
+    <y>230</y>
+    <edges>
+      <index value="2" />
+      <index value="5" />
+      <index value="0" />
+    </edges>
+  </number>
+  <number index="4">
+    <x>752</x>
+    <y>67</y>
+    <edges>
+      <index value="5" />
+      <index value="0" />
+      <index value="2" />
+    </edges>
+  </number>
+  <number index="5">
+    <x>745</x>
+    <y>197</y>
+    <edges>
+      <index value="3" />
+      <index value="4" />
+      <index value="0" />
+    </edges>
+  </number>
+</vertex>

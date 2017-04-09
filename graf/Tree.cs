@@ -25,8 +25,6 @@ namespace graf
         {
             isTreeOrGraph = false;
             //Graphics asd = this.pictureBox1.CreateGraphics();
-
-            
             Graphics asd = this.pictureBox1.CreateGraphics();
             avlTree = new treeCode(
                             asd
@@ -67,6 +65,10 @@ namespace graf
 
         private void addVertex_Click(object sender, EventArgs e)
         {
+            if (panel1.HorizontalScroll.Value == 0)
+            {
+                panel1.HorizontalScroll.Value = 785;
+            }
             string temp = inputNodeBox.Text;
             int number = 0;
             if (int.TryParse(temp, out number))
@@ -81,8 +83,13 @@ namespace graf
                 return;
             }
             avlTree.addNode(number);
+            avlTree.clearScreen();
+            avlTree.drawTree();
             avlTree.drawTree();
             listVertex.Items.Add(number.ToString());
+            viewList.Items.Add(number.ToString());
+            view_Click(sender, e);
+            listVertex.SelectedIndex = 0;
         }
 
         private void deleteTree_Click(object sender, EventArgs e)
@@ -108,35 +115,58 @@ namespace graf
             avlTree.drawTree();
         }
 
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            avlTree.drawTree();
+        }
+
+        private void panel1_Click(object sender, EventArgs e)
         {
             avlTree.drawTree();
         }
 
         private void deleteVertex_Click(object sender, EventArgs e)
         {
-            view.Enabled = true;
             var buf = listVertex.SelectedItem;
+            if (buf == null)
+            {
+                return;
+            }
             string s = buf.ToString();
             int num = 0;
             if (int.TryParse(s, out num))
             {
                 num = int.Parse(s);
+                Console.WriteLine(num);
                 avlTree.deleteNode(num);
+                avlTree.clearScreen();
+                avlTree.drawTree();
+                listVertex.Items.RemoveAt(listVertex.SelectedIndex);
+                listVertex.SelectedIndex = 0;
             }
             else
             {
                 return;
             }
-            
         }
 
         private void view_Click(object sender, EventArgs e)
         {
-            view.Enabled = false;
-            deleteVertex.Enabled = true;
+            var res = avlTree.getPropertiesByIndex();
+            propertiesBox.Text = "";
+            for (int i = 0; i < res.Count; i += 2)
+            {
+                propertiesBox.Text += "value (";
+                propertiesBox.Text += res[i].ToString();
+                propertiesBox.Text += ") = ";
+                propertiesBox.Text += res[i + 1].ToString();
+                propertiesBox.Text += Environment.NewLine;
+            }
         }
 
-        
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //avlTree.getPropertiesByIndex();
+        }
     }
 }

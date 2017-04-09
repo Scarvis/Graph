@@ -52,6 +52,11 @@
             this.inputNodeTxt = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.listVertex = new System.Windows.Forms.ComboBox();
+            this.viewList = new System.Windows.Forms.ComboBox();
+            this.propertiesBox = new System.Windows.Forms.TextBox();
+            this.propertiesLabel = new System.Windows.Forms.Label();
+            this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.загрузитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -62,7 +67,7 @@
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBox1.Location = new System.Drawing.Point(0, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1456, 826);
+            this.pictureBox1.Size = new System.Drawing.Size(2556, 826);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -118,13 +123,15 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(1169, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1236, 24);
             this.menuStrip.TabIndex = 10;
             this.menuStrip.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.сохранитьToolStripMenuItem,
+            this.загрузитьToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
@@ -234,7 +241,7 @@
             // inputNodeTxt
             // 
             this.inputNodeTxt.AutoSize = true;
-            this.inputNodeTxt.Location = new System.Drawing.Point(111, 79);
+            this.inputNodeTxt.Location = new System.Drawing.Point(109, 86);
             this.inputNodeTxt.Name = "inputNodeTxt";
             this.inputNodeTxt.Size = new System.Drawing.Size(74, 13);
             this.inputNodeTxt.TabIndex = 13;
@@ -247,7 +254,7 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(219, 32);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(938, 484);
+            this.panel1.Size = new System.Drawing.Size(1005, 484);
             this.panel1.TabIndex = 14;
             // 
             // listVertex
@@ -259,11 +266,57 @@
             this.listVertex.Sorted = true;
             this.listVertex.TabIndex = 16;
             // 
+            // viewList
+            // 
+            this.viewList.BackColor = System.Drawing.SystemColors.Control;
+            this.viewList.FormattingEnabled = true;
+            this.viewList.Location = new System.Drawing.Point(92, 365);
+            this.viewList.Name = "viewList";
+            this.viewList.Size = new System.Drawing.Size(91, 21);
+            this.viewList.Sorted = true;
+            this.viewList.TabIndex = 17;
+            // 
+            // propertiesBox
+            // 
+            this.propertiesBox.BackColor = System.Drawing.SystemColors.Control;
+            this.propertiesBox.Location = new System.Drawing.Point(9, 395);
+            this.propertiesBox.Multiline = true;
+            this.propertiesBox.Name = "propertiesBox";
+            this.propertiesBox.ReadOnly = true;
+            this.propertiesBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.propertiesBox.Size = new System.Drawing.Size(201, 148);
+            this.propertiesBox.TabIndex = 18;
+            // 
+            // propertiesLabel
+            // 
+            this.propertiesLabel.AutoSize = true;
+            this.propertiesLabel.Location = new System.Drawing.Point(12, 373);
+            this.propertiesLabel.Name = "propertiesLabel";
+            this.propertiesLabel.Size = new System.Drawing.Size(55, 13);
+            this.propertiesLabel.TabIndex = 19;
+            this.propertiesLabel.Text = "Свойства";
+            // 
+            // сохранитьToolStripMenuItem
+            // 
+            this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
+            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.сохранитьToolStripMenuItem.Text = "Сохранить ";
+            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
+            // 
+            // загрузитьToolStripMenuItem
+            // 
+            this.загрузитьToolStripMenuItem.Name = "загрузитьToolStripMenuItem";
+            this.загрузитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.загрузитьToolStripMenuItem.Text = "Загрузить";
+            // 
             // treeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1169, 558);
+            this.ClientSize = new System.Drawing.Size(1236, 558);
+            this.Controls.Add(this.propertiesLabel);
+            this.Controls.Add(this.propertiesBox);
+            this.Controls.Add(this.viewList);
             this.Controls.Add(this.listVertex);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.inputNodeTxt);
@@ -311,5 +364,10 @@
         private System.Windows.Forms.Label inputNodeTxt;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox listVertex;
+        private System.Windows.Forms.ComboBox viewList;
+        private System.Windows.Forms.TextBox propertiesBox;
+        private System.Windows.Forms.Label propertiesLabel;
+        private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem загрузитьToolStripMenuItem;
     }
 }

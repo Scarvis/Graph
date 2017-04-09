@@ -40,6 +40,7 @@
             this.delGraph = new System.Windows.Forms.Button();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сохранитьТестToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отменадействияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,24 +54,25 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aProgrammToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bFSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFile = new System.Windows.Forms.Button();
             this.back = new System.Windows.Forms.Button();
             this.forward = new System.Windows.Forms.Button();
             this.bfs = new System.Windows.Forms.Button();
-            this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bFSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сохранитьТестToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.загрузитьТестToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(753, 371);
+            this.textBox1.Location = new System.Drawing.Point(753, 391);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(144, 44);
+            this.textBox1.Size = new System.Drawing.Size(235, 24);
             this.textBox1.TabIndex = 0;
             // 
             // pictureBox1
@@ -80,7 +82,7 @@
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.pictureBox1.Location = new System.Drawing.Point(24, 50);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(873, 307);
+            this.pictureBox1.Size = new System.Drawing.Size(964, 307);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -167,7 +169,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(15, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(938, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1010, 24);
             this.menuStrip.TabIndex = 9;
             this.menuStrip.Text = "menuStrip1";
             this.menuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip_ItemClicked);
@@ -176,16 +178,24 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.сохранитьТестToolStripMenuItem,
+            this.загрузитьТестToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.fileToolStripMenuItem.Text = "&Файл";
             this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
+            // сохранитьТестToolStripMenuItem
+            // 
+            this.сохранитьТестToolStripMenuItem.Name = "сохранитьТестToolStripMenuItem";
+            this.сохранитьТестToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.сохранитьТестToolStripMenuItem.Text = "Сохранить Тест";
+            this.сохранитьТестToolStripMenuItem.Click += new System.EventHandler(this.сохранитьТестToolStripMenuItem_Click);
+            // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.выходToolStripMenuItem.Text = "Вы&ход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
@@ -278,6 +288,21 @@
             this.aProgrammToolStripMenuItem.Text = "&О программе...";
             this.aProgrammToolStripMenuItem.Click += new System.EventHandler(this.aProgrammToolStripMenuItem_Click);
             // 
+            // тестыToolStripMenuItem
+            // 
+            this.тестыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bFSToolStripMenuItem});
+            this.тестыToolStripMenuItem.Name = "тестыToolStripMenuItem";
+            this.тестыToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.тестыToolStripMenuItem.Text = "Тесты";
+            // 
+            // bFSToolStripMenuItem
+            // 
+            this.bFSToolStripMenuItem.Name = "bFSToolStripMenuItem";
+            this.bFSToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.bFSToolStripMenuItem.Text = "Загрузить тест";
+            this.bFSToolStripMenuItem.Click += new System.EventHandler(this.bFSToolStripMenuItem_Click);
+            // 
             // saveFile
             // 
             this.saveFile.BackColor = System.Drawing.SystemColors.Control;
@@ -319,34 +344,27 @@
             this.bfs.UseVisualStyleBackColor = true;
             this.bfs.Click += new System.EventHandler(this.bfs_Click);
             // 
-            // тестыToolStripMenuItem
+            // загрузитьТестToolStripMenuItem
             // 
-            this.тестыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bFSToolStripMenuItem});
-            this.тестыToolStripMenuItem.Name = "тестыToolStripMenuItem";
-            this.тестыToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.тестыToolStripMenuItem.Text = "Тесты";
+            this.загрузитьТестToolStripMenuItem.Name = "загрузитьТестToolStripMenuItem";
+            this.загрузитьТестToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.загрузитьТестToolStripMenuItem.Text = "Загрузить тест";
+            this.загрузитьТестToolStripMenuItem.Click += new System.EventHandler(this.загрузитьТестToolStripMenuItem_Click);
             // 
-            // bFSToolStripMenuItem
+            // progressBar
             // 
-            this.bFSToolStripMenuItem.Name = "bFSToolStripMenuItem";
-            this.bFSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.bFSToolStripMenuItem.Text = "BFS";
-            this.bFSToolStripMenuItem.Click += new System.EventHandler(this.bFSToolStripMenuItem_Click);
-            // 
-            // сохранитьТестToolStripMenuItem
-            // 
-            this.сохранитьТестToolStripMenuItem.Name = "сохранитьТестToolStripMenuItem";
-            this.сохранитьТестToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.сохранитьТестToolStripMenuItem.Text = "Сохранить Тест";
-            this.сохранитьТестToolStripMenuItem.Click += new System.EventHandler(this.сохранитьТестToolStripMenuItem_Click);
+            this.progressBar.Location = new System.Drawing.Point(753, 371);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(235, 21);
+            this.progressBar.TabIndex = 14;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(938, 432);
+            this.ClientSize = new System.Drawing.Size(1010, 432);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.bfs);
             this.Controls.Add(this.forward);
             this.Controls.Add(this.back);
@@ -406,6 +424,8 @@
         private System.Windows.Forms.ToolStripMenuItem тестыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bFSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьТестToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem загрузитьТестToolStripMenuItem;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
 

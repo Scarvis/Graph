@@ -66,6 +66,14 @@ namespace graf
                 drawVertex(x2, y2, indexv2);
             }
 
+            public void drawHeight(binaryTree.node val)
+            {
+                string buf1 = val.getHeightLeftSon().ToString();
+                string buf2 = val.getHeightRightSon().ToString();
+                string buf = buf1 + ' ' + buf2;
+                gr.DrawString(buf, new Font("Arial", 8), br, val.x - (buf.Count<char>()) * 2 - 4, val.y - 30);
+            }
+
             public void clearPicture()
             {
                 gr.Clear(Color.White);
@@ -80,8 +88,11 @@ namespace graf
                 public int value;
                 public int index;
                 public int heightNode = 0;
-                int heightLeftSon = 0, heightRightSon = 0;
+                public int prevHeightNode = 0;
+                public int heightLeftSon = 0, heightRightSon = 0;
                 public node leftSon, rightSon, parent;
+                public bool isAdd = false;
+                public int lastFactor = 0;
 
                 public node()
                 {
@@ -128,6 +139,16 @@ namespace graf
                     return heightRightSon;
                 }
 
+                public void setHeightLeftSon(int val)
+                {
+                    heightLeftSon = val;
+                }
+
+                public void setHeightRightSon(int val)
+                {
+                    heightRightSon = val;
+                }
+
                 public bool isError()
                 {
                     return x == y && y  == value && value == -777;
@@ -146,8 +167,11 @@ namespace graf
 
             public int height, width;
             public int Count = 0;
+            public node root = new node(-777, -777, -777);
+            public bool addNewLevel = false;
             List<node> avlTree = new List<node>();
-            node root = new node(-777, -777, -777);
+            string lastAdd = " ";
+            
 
             public binaryTree()
             {
@@ -176,11 +200,11 @@ namespace graf
                         return new node(-777, -777, -777);
                     }
                 }
-                if (value > finder.rightSon.value)
+                if (value > finder.value)
                 {
                     return findNode(value, finder.rightSon, finder);
                 }
-                else if(value < finder.leftSon.value)
+                else if(value < finder.value)
                 {
                     return findNode(value, finder.leftSon, finder);
                 }
@@ -195,16 +219,34 @@ namespace graf
                 int v = 0;
                 if (finder == null)
                 {
+                    if (parent.leftSon == parent.rightSon && !addNewLevel)
+                    {
+                        addNewLevel = true;
+                        parent.isAdd = true;
+                    }
                     int u = parent.index;
                     int x = avlTree[u].x;
                     int y = avlTree[u].y + 60;
+                    //Console.WriteLine(parent.heightNode);
                     if (value < parent.value)
                     {
-                        x -= 400 - hNode * 80;
+                        //x -= 400 - hNode * 80;
+                        if (parent == root)
+                            x -= 80;
+                        else
+                            x -= 40;
+                        parent.heightLeftSon++;
+                        //if (addNewLevel) x -= 80;
                     }
                     else
                     {
-                        x += 400 - hNode * 80;
+                        if (parent == root)
+                            x += 80;
+                        else
+                            x += 40;
+                        parent.heightRightSon++;
+                        //if (addNewLevel) x += 80;
+                        //x += 400 - hNode * 80;
                     }
                     finder = new node(x, y, value);
                     finder.parent = parent;
@@ -222,26 +264,73 @@ namespace graf
                 }
                 v = finder.index;
                 hNode++;
-                if (value > avlTree[v].value)
+                if (value > finder.value)
                 {
-                    avlTree[v].incrementHeightRightSon();
-                    return findAndAdd(
+
+                    //avlTree[v].incrementHeightRightSon();
+                    if (lastAdd.Count<char>() == 0 && finder == root)
+                    {
+                        lastAdd = "right";
+                    }
+                    var res = findAndAdd(
                        value
-                       , avlTree[v].getRightSon()
+                       , finder.getRightSon()
                        , finder
                        , hNode
                        );
+                    if (addNewLevel )
+                    {
+                        if (finder.getHeightRightSon() >= finder.getHeightLeftSon())
+                        {
+                            //if (finder.value < finder.parent.value)
+                            //{
+                            //    //finder.x -= 80;
+                            //}
+                            //else
+                            //{
+                            //    //finder.x += 80;
+                            //}
+                        }
+                        //finder.incrementHeightRightSon();
+                    }
+                    if (res.parent.leftSon == null && !addNewLevel)
+                        addNewLevel = true;
+                    return res;
                 }
-                else if (value < avlTree[v].value)
+                else if (value < finder.value)
                 {
-                    avlTree[v].incrementHeightLeftSon();
-                    return findAndAdd(
+                    if (lastAdd.Count<char>() == 0 && finder == root)
+                    {
+                        lastAdd = "left";
+                    }
+                    if (v != 0 && finder.parent.value > finder.value)
+                    {
+                        //finder.x -= 80;
+                    }
+                    var res = findAndAdd(
                         value,
-                        avlTree[v].getLeftSon()
+                         finder.getLeftSon()
                         , finder
                         , hNode
                         );
-                    
+                    if (addNewLevel )
+                    {
+                        if (finder.getHeightRightSon() <= finder.getHeightLeftSon())
+                        {
+                            //if (finder.value < finder.parent.value)
+                            //{
+                            //    //finder.x -= 80;
+                            //}
+                            //else
+                            //{
+                            //    //finder.x += 80;
+                            //}
+                        }
+                        //finder.incrementHeightLeftSon();
+                    }
+                    if (res.parent.rightSon == null && !addNewLevel)
+                        addNewLevel = true;
+                    return res;
                 }
                 else
                 {
@@ -254,7 +343,7 @@ namespace graf
                 if (root.isError())
                 {
                     root.x = height / 2;
-                    root.y = 20;
+                    root.y = 30;
                     root.value = value;
                     root.index = 0;
                     avlTree.Add(root);
@@ -267,9 +356,78 @@ namespace graf
                     return false;
                 }
 
+                if (flag.parent == root)
+                {
+                    flag.lastFactor = 1;
+                }
+
                 avlTree.Add(flag);
                 ++Count;
                 return true;
+            }
+            
+            private int setHeightRec(node val)
+            {
+                if (val == null)
+                    return 0;
+                if (val.leftSon == null && val.rightSon == null)
+                    return 0;
+                int buf1 = val.heightLeftSon;
+                int buf2 = val.heightRightSon;
+
+                if (val.leftSon != null)
+                {
+                    setHeightRec(val.leftSon);
+                    val.heightLeftSon = //Math.Max(
+                        Math.Max(val.leftSon.heightLeftSon, val.leftSon.heightRightSon) + 1
+                        //, val.heightLeftSon)
+                        ;
+                    if (buf1 != val.heightLeftSon)
+                        val.isAdd = true;
+                }
+                if (val.rightSon != null)
+                {
+                    setHeightRec(val.rightSon);
+                    val.heightRightSon = Math.Max(Math.Max(val.rightSon.heightLeftSon, val.rightSon.heightRightSon) + 1, val.heightRightSon);
+                    if (buf2 != val.heightRightSon)
+                        val.isAdd = true;
+                }
+                
+                return 0;
+            }
+
+            public void setHeight()
+            {
+                if (lastAdd == "left")
+                {
+                    setHeightRec(root.leftSon);
+                    if (root.leftSon != null)
+                    {
+                        root.heightLeftSon = Math.Max(root.leftSon.heightLeftSon, root.leftSon.heightRightSon) + 1;
+                    }
+                }
+                if (lastAdd == "right")
+                {
+                    setHeightRec(root.rightSon);
+                    if (root.rightSon != null)
+                    {
+                        root.heightRightSon = Math.Max(root.rightSon.heightLeftSon, root.rightSon.heightRightSon) + 1;
+                    }
+                }
+                if (lastAdd == "deleteNode")
+                {
+                    setHeightRec(root.leftSon);
+                    if (root.leftSon != null)
+                    {
+                        root.heightLeftSon = Math.Max(root.leftSon.heightLeftSon, root.leftSon.heightRightSon) + 1;
+                    }
+                    setHeightRec(root.rightSon);
+                    if (root.rightSon != null)
+                    {
+                        root.heightRightSon = Math.Max(root.rightSon.heightLeftSon, root.rightSon.heightRightSon) + 1;
+                    }
+                }
+                lastAdd = "";
             }
 
             public void clear()
@@ -287,24 +445,150 @@ namespace graf
             public bool delNode(int value)
             {
                 node temp = findNode(value);
+                int x, y;
                 if (temp.isError())
                 {
                     return false;
                 }
+                lastAdd = "deleteNode";
                 if (temp.leftSon == null && temp.rightSon == null)
                 {
+                    int val = temp.value;
+                    if (val < temp.parent.value)
+                    {
+                        temp.parent.leftSon = null;
+                        temp.parent.heightLeftSon--;
+                    }
+
+                    else if (val > temp.parent.value)
+                    {
+                        temp.parent.rightSon = null;
+                        temp.parent.heightRightSon--;
+                    }
+
                     temp = null;
                 }
                 else if (temp.leftSon == null && temp.rightSon != null)
                 {
-                    temp = temp.leftSon;
+                    temp = temp.rightSon;
+                    x = temp.parent.x;
+                    y = temp.parent.y;
+                    temp.parent = temp;
+                    temp.x = x;
+                    temp.y = y;
+
+                //    temp.heightRightSon--;
                 }
                 else if (temp.leftSon != null && temp.rightSon == null)
                 {
+                    temp = temp.leftSon;
+                    x = temp.parent.x;
+                    y = temp.parent.y;
+                    temp.parent = temp;
+                    temp.x = x;
+                    temp.y = y;
+                    
+                    //temp.heightLeftSon--;
+                }
+                else
+                {
                     temp = temp.rightSon;
+                    while (temp.leftSon != null)
+                    {
+                        temp = temp.leftSon;
+                    }
+                    int val = temp.value;
+                    if (temp.parent != root)
+                    {
+                        temp.parent.leftSon = null;
+                        temp.parent.heightLeftSon--;
+                    }
+                    else
+                    {
+                        temp.parent.rightSon = null;
+                        temp.parent.heightRightSon--;
+                    }
+                    temp = findNode(value);
+
+                    for (int i = 0; i < avlTree.Count; i++)
+                    {
+                        if (avlTree[i].value == val)
+                        {
+                            avlTree.RemoveAt(i);
+                            temp.value = val;
+                            return true;
+                        }
+                    }
+                    return false;
                 }
 
+                for(int i = 0; i < avlTree.Count; i++)
+                {
+                    if (avlTree[i].value == value)
+                    {
+                        avlTree.RemoveAt(i);
+                        break;
+                    }
+                }
+                setHeight();
+                //reconstr();
                 return true;
+            }
+
+            private void reconRec(node val, string dir, int mnozhitel = 0, int alpha = 0, bool parentAdd = false)
+            {
+                if (val == null) return;
+                int diff = Math.Max(val.lastFactor, mnozhitel);
+                if (dir == "left" /*&& val.lastFactor != mnozhitel*/)
+                {
+                    if (val.parent != root)
+                    {
+                        int um = (Math.Max(val.heightLeftSon, val.heightRightSon) + 1);
+                        val.x = val.parent.x - 40 * (Math.Max(val.heightLeftSon, val.heightRightSon) + 1);
+                        if (um > 1 && um % 2 == 1)
+                        {
+                            val.x -= 40;
+                        }
+                    }
+                    else if(val.lastFactor!=mnozhitel)
+                    {
+                        val.x -= 80;
+                    }
+                    val.isAdd = false;
+                    parentAdd = true;
+                    val.lastFactor = mnozhitel;
+                }
+                else
+                    parentAdd = false;
+
+                if (dir == "right" /*&& val.lastFactor != mnozhitel*/)
+                {
+                    if (val.parent != root)
+                    {
+                        int um = (Math.Max(val.heightLeftSon, val.heightRightSon) + 1);
+                        val.x = val.parent.x + 40 * (Math.Max(val.heightLeftSon, val.heightRightSon) + 1);
+                        if (um > 1 && um % 2 == 1)
+                        {
+                            val.x += 40;
+                        }
+                    }
+                    else if (val.lastFactor != mnozhitel)
+                    {
+                        val.x += 80;
+                    }
+                    val.isAdd = false;
+                    parentAdd = true;
+                    val.lastFactor = mnozhitel;
+                }
+
+                reconRec(val.leftSon, "left", val.heightLeftSon, alpha, parentAdd);
+                reconRec(val.rightSon, "right", val.heightRightSon, alpha, parentAdd);
+            }
+
+            public void reconstr()
+            {
+                reconRec(root.leftSon, "left", root.heightLeftSon);
+                reconRec(root.rightSon, "right", root.heightRightSon);
             }
         }
 
@@ -320,7 +604,23 @@ namespace graf
 
         public bool addNode(int value)
         {
-            return avlTree.addNode(value);
+            bool res = avlTree.addNode(value);
+            avlTree.addNewLevel = false;
+            avlTree.setHeight();
+            avlTree.reconstr();
+            return res;
+        }
+
+        public List<int> getPropertiesByIndex()
+        {
+            List<int> res = new List<int>();
+            var buf = avlTree.getListTree();
+            for(int i = 0; i < buf.Count; ++i)
+            {
+                res.Add(buf[i].value);
+                res.Add(buf[i].x);
+            }
+            return res;
         }
 
         public bool deleteNode(int value)
@@ -331,6 +631,11 @@ namespace graf
         public void clear()
         {
             avlTree.clear();
+            graphics.clearPicture();
+        }
+
+        public void clearScreen()
+        {
             graphics.clearPicture();
         }
 
@@ -368,12 +673,22 @@ namespace graf
         {
             var temp = avlTree.getListTree();
 
-            for(int i = 0; i < temp.Count; ++i)
+            for (int i = 0; i < temp.Count; ++i)
             {
                 graphics.drawVertex(temp[i].x, temp[i].y, temp[i].value);
             }
             if (temp.Count > 0)
                 drawEdgesFromDrawTree(temp[0]);
+            drawHeightVertex();
+        }
+
+        public void drawHeightVertex()
+        {
+            var mas = avlTree.getListTree();
+            for(int i = 0; i < mas.Count; ++i)
+            {
+                graphics.drawHeight(mas[i]);
+            }
         }
     }
 }

@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vertex max_size="27">
+  <number index="0">
+    <x>178</x>
+    <y>151</y>
+    <edges>
+      <index value="3" />
+      <index value="2" />
+      <index value="1" />
+      <index value="5" />
+    </edges>
+  </number>
+  <number index="1">
+    <x>337</x>
+    <y>39</y>
+    <edges>
+      <index value="0" />
+      <index value="4" />
+      <index value="5" />
+    </edges>
+  </number>
+  <number index="2">
+    <x>338</x>
+    <y>138</y>
+    <edges>
+      <index value="0" />
+      <index value="6" />
+      <index value="5" />
+      <index value="7" />
+    </edges>
+  </number>
+  <number index="3">
+    <x>346</x>
+    <y>255</y>
+    <edges>
+      <index value="0" />
+      <index value="9" />
+      <index value="8" />
+    </edges>
+  </number>
+  <number index="4">
+    <x>440</x>
+    <y>13</y>
+    <edges>
+      <index value="1" />
+      <index value="10" />
+      <index value="13" />
+    </edges>
+  </number>
+  <number index="5">
+    <x>445</x>
+    <y>51</y>
+    <edges>
+      <index value="0" />
+      <index value="1" />
+      <index value="2" />
+      <index value="13" />
+    </edges>
+  </number>
+  <number index="6">
+    <x>451</x>
+    <y>98</y>
+    <edges>
+      <index value="2" />
+      <index value="14" />
+    </edges>
+  </number>
+  <number index="7">
+    <x>457</x>
+    <y>159</y>
+    <edges>
+      <index value="2" />
+      <index value="21" />
+    </edges>
+  </number>
+  <number index="8">
+    <x>462</x>
+    <y>220</y>
+    <edges>
+      <index value="3" />
+      <index value="19" />
+    </edges>
+  </number>
+  <number index="9">
+    <x>463</x>
+    <y>272</y>
+    <edges>
+      <index value="3" />
+      <index value="18" />
+    </edges>
+  </number>
+  <number index="10">
+    <x>611</x>
+    <y>16</y>
+    <edges>
+      <index value="4" />
+      <index value="11" />
+    </edges>
+  </number>
+  <number index="11">
+    <x>811</x>
+    <y>22</y>
+    <edges>
+      <index value="10" />
+      <index value="12" />
+    </edges>
+  </number>
+  <number index="12">
+    <x>915</x>
+    <y>29</y>
+    <edges>
+      <index value="11" />
+    </edges>
+  </number>
+  <number index="13">
+    <x>606</x>
+    <y>59</y>
+    <edges>
+      <index value="4" />
+      <index value="5" />
+      <index value="15" />
+    </edges>
+  </number>
+  <number index="14">
+    <x>609</x>
+    <y>95</y>
+    <edges>
+      <index value="6" />
+      <index value="16" />
+    </edges>
+  </number>
+  <number index="15">
+    <x>693</x>
+    <y>114</y>
+    <edges>
+      <index value="22" />
+      <index value="19" />
+      <index value="13" />
+    </edges>
+  </number>
+  <number index="16">
+    <x>783</x>
+    <y>102</y>
+    <edges>
+      <index value="14" />
+      <index value="17" />
+    </edges>
+  </number>
+  <number index="17">
+    <x>930</x>
+    <y>106</y>
+    <edges>
+      <index value="16" />
+      <index value="26" />
+    </edges>
+  </number>
+  <number index="18">
+    <x>575</x>
+    <y>263</y>
+    <edges>
+      <index value="9" />
+      <index value="20" />
+    </edges>
+  </number>
+  <number index="19">
+    <x>580</x>
+    <y>205</y>
+    <edges>
+      <index value="20" />
+      <index value="8" />
+      <index value="15" />
+    </edges>
+  </number>
+  <number index="20">
+    <x>632</x>
+    <y>261</y>
+    <edges>
+      <index value="18" />
+      <index value="22" />
+      <index value="19" />
+    </edges>
+  </number>
+  <number index="21">
+    <x>654</x>
+    <y>200</y>
+    <edges>
+      <index value="7" />
+    </edges>
+  </number>
+  <number index="22">
+    <x>706</x>
+    <y>264</y>
+    <edges>
+      <index value="20" />
+      <index value="15" />
+      <index value="23" />
+    </edges>
+  </number>
+  <number index="23">
+    <x>793</x>
+    <y>239</y>
+    <edges>
+      <index value="22" />
+      <index value="24" />
+      <index value="26" />
+    </edges>
+  </number>
+  <number index="24">
+    <x>892</x>
+    <y>281</y>
+    <edges>
+      <index value="23" />
+    </edges>
+  </number>
+  <number index="25">
+    <x>926</x>
+    <y>240</y>
+    <edges>
+      <index value="26" />
+    </edges>
+  </number>
+  <number index="26">
+    <x>829</x>
+    <y>187</y>
+    <edges>
+      <index value="23" />
+      <index value="25" />
+      <index value="17" />
+    </edges>
+  </number>
+</vertex>

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.IO;
 
 namespace graf
 {
@@ -73,7 +74,11 @@ namespace graf
                 int v = fs.getHitVertex(point);
                 if (v != -1)
                 {
-                    fs.bfs(v);
+                    progressBar.Minimum = 0;
+                    progressBar.Maximum = fs.size();
+                    progressBar.Value = 0;
+                    textBox1.Text = "";
+                    fs.bfs(v,progressBar);
                     textBox1.Text = "BFS закончен";
                 }
             }
@@ -231,7 +236,7 @@ namespace graf
 
         private void saveFile_Click(object sender, EventArgs e)
         {
-
+            сохранитьТестToolStripMenuItem_Click(sender, e);
         }
 
         private void back_Click(object sender, EventArgs e)
@@ -272,11 +277,20 @@ namespace graf
         private void сохранитьТестToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var g = fs.getListGraph();
-
+            bool isEmpty = false;
+            if (g.Count == 0)
+            {
+                isEmpty = true;
+            }
             XmlDocument doc = new XmlDocument();
             XmlDeclaration XmlDec = doc.CreateXmlDeclaration("1.0", "utf-8", null);
             doc.AppendChild(XmlDec);
             XmlElement root = doc.CreateElement("vertex");
+            XmlAttribute maxVer = doc.CreateAttribute("max_size");
+            XmlText MVT = doc.CreateTextNode(g.Count.ToString());
+            maxVer.AppendChild(MVT);
+            root.Attributes.Append(maxVer);
+
             for (int i = 0; i < g.Count; ++i)
             {
                 XmlElement abc = doc.CreateElement("number");
@@ -311,9 +325,7 @@ namespace graf
                 root.AppendChild(abc);
                 doc.AppendChild(root);
             }
-
-
-
+            
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.Title = "Сохранить тест...";
             saveDialog.OverwritePrompt = true;
@@ -322,34 +334,83 @@ namespace graf
             saveDialog.ShowHelp = true;
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
+                if (isEmpty)
+                {
+                    MessageBox.Show("ГРАФ ПУСТОЙ");
+                    return;
+                }
                 doc.Save(saveDialog.FileName);
             }
         }
 
         private void bFSToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OpenFileDialog ofd = new OpenFileDialog();
+            Stream stream = null;
+            string dirc = Directory.GetCurrentDirectory() + "\\tests\\";
+            ofd.InitialDirectory = dirc;
+            ofd.Filter = "XML-File | *.xml";
+            ofd.FilterIndex = 1;
+            ofd.RestoreDirectory = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    if ((stream = ofd.OpenFile()) != null)
+                    {
+                        dirc = ofd.FileName;
+                        stream = null;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+            }
+            else
+            {
+                return;
+            }
+
             XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("tests/bfs test.xml");
+            xDoc.Load(dirc);
             XmlElement xRoot = xDoc.DocumentElement;
+            XmlNode af = xRoot.Attributes.GetNamedItem("max_size");
+            int maxSz = int.Parse(af.Value);
+            fs.setMaxSize(maxSz);
+
             foreach (XmlNode xnode in xRoot)
             {
+                int index = -1;
                 if (xnode.Attributes.Count > 0)
                 {
                     XmlNode attr = xnode.Attributes.GetNamedItem("index");
                     if (attr != null)
+                    {
                         Console.WriteLine("index: {0}", attr.Value);
+                        index = int.Parse(attr.Value);
+                    }
                 }
+                Point buf = new Point();
                 foreach (XmlNode childnode in xnode.ChildNodes)
                 {
                     // если узел - company
                     if (childnode.Name == "x")
                     {
                         Console.WriteLine("x: {0}", childnode.InnerText);
+                        buf.X = int.Parse(childnode.InnerText);
                     }
                     // если узел age
                     else if (childnode.Name == "y")
                     {
                         Console.WriteLine("y: {0}", childnode.InnerText);
+                        buf.Y = int.Parse(childnode.InnerText);
+                        Console.Write("x = {0} , y = {0}\n", buf.X, buf.Y);
+                        fs.addVertex(buf, index);
                     }
                     else if (childnode.Name == "edges")
                     {
@@ -359,12 +420,21 @@ namespace graf
                             {
                                 XmlNode attr = edge.Attributes.GetNamedItem("value");
                                 if (attr != null)
+                                {
                                     Console.WriteLine("edge index: {0}", attr.Value);
+                                    fs.addEdge(index, int.Parse(attr.Value));
+                                }
                             }
                         }
                     }
                 }
             }
+            fs.drawGraph();
+        }
+
+        private void загрузитьТестToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bFSToolStripMenuItem_Click(sender, e);
         }
     }
 }

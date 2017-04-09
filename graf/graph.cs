@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace graf
 {
@@ -215,6 +216,19 @@ namespace graf
             return gr.getBitmap();
         }
 
+        public void setMaxSize(int max_size)
+        {
+            for(int i = 0; i < max_size; ++i)
+            {
+                g.Add(new vertex());
+            }
+        }
+
+        public int size()
+        {
+            return g.Count;
+        }
+
         public bool addVertex(Point point)
         {
             int noDuplicateVertex = 3;
@@ -231,6 +245,13 @@ namespace graf
             }
         }
 
+        public void addVertex(Point pt,int index)
+        {
+            g[index].x = pt.X;
+            g[index].y = pt.Y;
+            g[index].index = index;
+        }
+
         public void drawVertex(int x, int y, int indexVertex = -2)
         {
             if (indexVertex == -2)
@@ -241,6 +262,12 @@ namespace graf
             {
                 gr.drawVertex(x, y, indexVertex);
             }
+        }
+
+        public void addEdge(int v, int u)
+        {
+            g[u].col.Add(v);
+            g[v].col.Add(u);
         }
 
         // соединение 2 вершин ребром
@@ -330,7 +357,7 @@ namespace graf
             }
         }
 
-        public void bfs(int v)
+        public void bfs(int v, ProgressBar progress)
         {
             Thread.Sleep(500);
             List<bool> used = new List<bool>();
@@ -347,14 +374,19 @@ namespace graf
             {
                 return;
             }
+            progress.Value += 1;
 
             List<int> bufV = new List<int>();
             for(int i = 0; i < g[v].col.Count; i++)
             {
                 int u = g[v].col[i];
-                used[u] = true;
-                bufV.Add(u);
-                gr.drawSelectedVertex(g[u].x, g[u].y);
+                if (!used[u])
+                {
+                    used[u] = true;
+                    bufV.Add(u);
+                    gr.drawSelectedVertex(g[u].x, g[u].y);
+                    progress.Value += 1;
+                }
             }
 
             Thread.Sleep(1500);
@@ -378,6 +410,7 @@ namespace graf
                             b.Add(u);
                             used[u] = true;
                             gr.drawSelectedVertex(g[u].x, g[u].y);
+                            progress.Value += 1;
                         }
                     }
                 }
