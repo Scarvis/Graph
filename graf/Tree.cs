@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace graf
 {
@@ -20,6 +22,7 @@ namespace graf
         public bool isTreeOrGraph = false;
         public bool closeForm = true;
         treeCode avlTree;
+        Queue<int> saveTree = new Queue<int>();
 
         private void treeForm_Load(object sender, EventArgs e)
         {
@@ -90,6 +93,7 @@ namespace graf
             viewList.Items.Add(number.ToString());
             view_Click(sender, e);
             listVertex.SelectedIndex = 0;
+            saveTree.Enqueue(number);
         }
 
         private void deleteTree_Click(object sender, EventArgs e)
@@ -143,6 +147,16 @@ namespace graf
                 avlTree.drawTree();
                 listVertex.Items.RemoveAt(listVertex.SelectedIndex);
                 listVertex.SelectedIndex = 0;
+                Queue<int> asdf = new Queue<int>();
+                foreach (int obj in saveTree)
+                {
+                    if (obj.Equals(num))
+                    {
+                        continue;
+                    }
+                    asdf.Enqueue(obj);
+                }
+                saveTree = asdf;
             }
             else
             {
@@ -167,6 +181,94 @@ namespace graf
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //avlTree.getPropertiesByIndex();
+            XmlDocument doc = new XmlDocument();
+            XmlDeclaration XmlDec = doc.CreateXmlDeclaration("1.0", "utf-8", null);
+            doc.AppendChild(XmlDec);
+            XmlElement root = doc.CreateElement("vertex");
+            foreach(int obj in saveTree)
+            {
+                XmlElement abc = doc.CreateElement("number");
+                XmlText abcTxt = doc.CreateTextNode(obj.ToString());
+                abc.AppendChild(abcTxt);
+                root.AppendChild(abc);
+                doc.AppendChild(root);
+            }
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Сохранить тест...";
+            saveDialog.OverwritePrompt = true;
+            saveDialog.CheckPathExists = true;
+            saveDialog.Filter = "XML-File | *.xml";
+            saveDialog.ShowHelp = true;
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (saveTree.Count == 0)
+                {
+                    MessageBox.Show("ГРАФ ПУСТОЙ");
+                    return;
+                }
+                doc.Save(saveDialog.FileName);
+            }
+        }
+
+        private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            Stream stream = null;
+            string dirc = Directory.GetCurrentDirectory() + "\\tests\\";
+            ofd.InitialDirectory = dirc;
+            ofd.Filter = "XML-File | *.xml";
+            ofd.FilterIndex = 1;
+            ofd.RestoreDirectory = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    if ((stream = ofd.OpenFile()) != null)
+                    {
+                        dirc = ofd.FileName;
+                        stream = null;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+            }
+            else
+            {
+                return;
+            }
+
+            avlTree.clear();
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(dirc);
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            foreach (XmlNode xnode in xRoot)
+            {
+                if (xnode.Name == "number")
+                {
+                    int val = int.Parse(xnode.InnerText);
+                    saveTree.Enqueue(val);
+                    avlTree.addNode(val);
+                }
+                else
+                {
+                    MessageBox.Show("НЕ УДАЛОСЬ ЗАГРУЗИТЬ!");
+                    return;
+                }
+            }
+            avlTree.drawTree();
+            if (panel1.HorizontalScroll.Value <= 50)
+            {
+                panel1.HorizontalScroll.Value = 785;
+            }
         }
     }
 }

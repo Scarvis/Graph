@@ -519,6 +519,7 @@ namespace graf
                             return true;
                         }
                     }
+                    temp.value = val;
                     return false;
                 }
 
