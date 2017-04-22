@@ -484,8 +484,9 @@ namespace graf
             }
 
             used[v] = true;
-            gr.drawSelectedVertex(g[v].x, g[v].y);
+            gr.drawSelectedVertex(g[v].x, g[v].y, new Pen(Color.Red, 4));
             Thread.Sleep(1500);
+            gr.drawSelectedVertex(g[v].x, g[v].y, new Pen(Color.White, 4));
             gr.drawSelectedVertex(g[v].x, g[v].y, new Pen(Color.Black, 2));
             if (g[v].col.Count == 0)
             {
@@ -501,7 +502,7 @@ namespace graf
                 {
                     used[u] = true;
                     bufV.Add(u);
-                    gr.drawSelectedVertex(g[u].x, g[u].y);
+                    gr.drawSelectedVertex(g[u].x, g[u].y, new Pen(Color.Red, 4));
                     progress.Value += 1;
                 }
             }
@@ -512,6 +513,7 @@ namespace graf
             for (int i = 0; i < bufV.Count; i++)
             {
                 int u = bufV[i];
+                gr.drawSelectedVertex(g[u].x, g[u].y, new Pen(Color.White, 4));
                 gr.drawSelectedVertex(g[u].x, g[u].y, tempPen);
             }
             while (bufV.Count > 0)
@@ -526,7 +528,7 @@ namespace graf
                         {
                             b.Add(u);
                             used[u] = true;
-                            gr.drawSelectedVertex(g[u].x, g[u].y);
+                            gr.drawSelectedVertex(g[u].x, g[u].y, new Pen(Color.Red, 4));
                             progress.Value += 1;
                         }
                     }
@@ -534,6 +536,7 @@ namespace graf
                 for (int i = 0; i < bufV.Count; i++)
                 {
                     int u = bufV[i];
+                    gr.drawSelectedVertex(g[u].x, g[u].y, new Pen(Color.White, 4));
                     gr.drawSelectedVertex(g[u].x, g[u].y, tempPen);
                 }
                 if (b.Count > 0)
@@ -569,7 +572,15 @@ namespace graf
                             int u = i;
                             var v = g[g[i].col[j].to].index;
                             g[u].col.RemoveAt(j);
-                            g[v].col.Remove(new vertex.versina(u, g[i].col[j].weight));
+                            //g[v].col.Remove(new vertex.versina(u, g[i].col[j].weight));
+                            for(int k = 0; k < g[v].col.Count; ++k)
+                            {
+                                if(g[v].col[k].to==i)
+                                {
+                                    g[v].col.RemoveAt(k);
+                                    break;
+                                }
+                            }
                             return true;
                         }
                     }

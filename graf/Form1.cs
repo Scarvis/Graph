@@ -423,6 +423,7 @@ namespace graf
                 return;
             }
 
+            
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(dirc);
             XmlElement xRootVersion = xDoc.DocumentElement;
@@ -433,6 +434,8 @@ namespace graf
                 MessageBox.Show("Error: Could not read file from disk. Original error: " + "Несовпадение версий");
                 return;
             }
+
+            fs.clear();
 
             XmlNode xRoot = xRootVersion.ChildNodes[0];
             af = xRoot.Attributes.GetNamedItem("max_size");
@@ -492,10 +495,9 @@ namespace graf
                     }
                 }
             }
+            fs.clearPicture();
             fs.drawGraph();
         }
-
-
 
         private void weightVertexRB_Click(object sender, EventArgs e)
         {
@@ -509,6 +511,17 @@ namespace graf
 
         private void prima_Click(object sender, EventArgs e)
         {
+            view.Enabled = true;
+            vertex.Enabled = true;
+            edge.Enabled = true;
+            dfs.Enabled = true;
+            delVertex.Enabled = true;
+            delEdge.Enabled = true;
+            delGraph.Enabled = true;
+            bfs.Enabled = true;
+
+            fs.clearPicture();
+            fs.drawGraph();
             string algorithmPrimaString = fs.algorithmPrima();
             algorithmPrimaSumVertexTextBox.Text = algorithmPrimaString;
         }
