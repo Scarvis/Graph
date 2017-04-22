@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<programm_version id="3.0">
+  <vertex max_size="4">
+    <number index="0">
+      <x>249</x>
+      <y>142</y>
+      <edges>
+        <index value="1" weight="10" />
+        <index value="3" weight="11" />
+      </edges>
+    </number>
+    <number index="1">
+      <x>525</x>
+      <y>55</y>
+      <edges>
+        <index value="0" weight="10" />
+        <index value="2" weight="9" />
+        <index value="3" weight="5" />
+      </edges>
+    </number>
+    <number index="2">
+      <x>606</x>
+      <y>254</y>
+      <edges>
+        <index value="1" weight="9" />
+        <index value="3" weight="8" />
+      </edges>
+    </number>
+    <number index="3">
+      <x>333</x>
+      <y>398</y>
+      <edges>
+        <index value="2" weight="8" />
+        <index value="1" weight="5" />
+        <index value="0" weight="11" />
+      </edges>
+    </number>
+  </vertex>
+</programm_version>

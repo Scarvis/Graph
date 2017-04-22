@@ -306,14 +306,22 @@ namespace graf
         private void сохранитьТестToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var g = fs.getListGraph();
-            bool isEmpty = false;
             if (g.Count == 0)
             {
-                isEmpty = true;
+                MessageBox.Show("ГРАФ ПУСТОЙ");
+                return;
             }
             XmlDocument doc = new XmlDocument();
             XmlDeclaration XmlDec = doc.CreateXmlDeclaration("1.0", "utf-8", null);
             doc.AppendChild(XmlDec);
+
+            XmlElement progVersion = doc.CreateElement("programm_version");
+            XmlAttribute progVersionAttr = doc.CreateAttribute("id");
+            XmlText progVersionTxt = doc.CreateTextNode(programVersion);
+            progVersionAttr.AppendChild(progVersionTxt);
+            progVersion.Attributes.Append(progVersionAttr);
+
+
             XmlElement root = doc.CreateElement("vertex");
             XmlAttribute maxVer = doc.CreateAttribute("max_size");
             XmlText MVT = doc.CreateTextNode(g.Count.ToString());
@@ -338,9 +346,16 @@ namespace graf
                     XmlElement edge = doc.CreateElement("index");
                     edges.AppendChild(edge);
                     XmlAttribute edgeAtr = doc.CreateAttribute("value");
-                    edge.Attributes.Append(edgeAtr);
-                    XmlText edgeTxt = doc.CreateTextNode(g[i].col[j].ToString());
+                    XmlText edgeTxt = doc.CreateTextNode(g[i].col[j].to.ToString());
                     edgeAtr.AppendChild(edgeTxt);
+                    edge.Attributes.Append(edgeAtr);
+
+
+                    XmlAttribute edgeWeight = doc.CreateAttribute("weight");
+                    XmlText edgeWeightTxt = doc.CreateTextNode(g[i].col[j].weight.ToString());
+                    edgeWeight.AppendChild(edgeWeightTxt);
+                    edge.Attributes.Append(edgeWeight);
+
                 }
                 rootAtr.AppendChild(rootTxt);
                 curX.AppendChild(xTxt);
@@ -352,31 +367,34 @@ namespace graf
                 abc.AppendChild(edges);
 
                 root.AppendChild(abc);
-                doc.AppendChild(root);
+                progVersion.AppendChild(root);
+                doc.AppendChild(progVersion);
             }
             
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Сохранить тест...";
-            saveDialog.OverwritePrompt = true;
-            saveDialog.CheckPathExists = true;
-            saveDialog.Filter = "XML-File | *.xml";
-            saveDialog.ShowHelp = true;
-            if (saveDialog.ShowDialog() == DialogResult.OK)
+            SaveFileDialog saveGraphDialog = new SaveFileDialog();
+            saveGraphDialog.Title = "Сохранить тест...";
+            saveGraphDialog.OverwritePrompt = true;
+            saveGraphDialog.CheckPathExists = true;
+            saveGraphDialog.Filter = "XML-File | *.xml";
+            saveGraphDialog.ShowHelp = true;
+            string dirc = Directory.GetCurrentDirectory() + "\\tests\\graphs\\";
+            saveGraphDialog.InitialDirectory = dirc;
+            if (saveGraphDialog.ShowDialog() == DialogResult.OK)
             {
-                if (isEmpty)
-                {
-                    MessageBox.Show("ГРАФ ПУСТОЙ");
-                    return;
-                }
-                doc.Save(saveDialog.FileName);
+                doc.Save(saveGraphDialog.FileName);
             }
         }
 
         private void bFSToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            загрузитьТестToolStripMenuItem_Click(sender, e);
+        }
+
+        private void загрузитьТестToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             OpenFileDialog ofd = new OpenFileDialog();
             Stream stream = null;
-            string dirc = Directory.GetCurrentDirectory() + "\\tests\\";
+            string dirc = Directory.GetCurrentDirectory() + "\\tests\\graphs\\";
             ofd.InitialDirectory = dirc;
             ofd.Filter = "XML-File | *.xml";
             ofd.FilterIndex = 1;
@@ -395,7 +413,7 @@ namespace graf
                         return;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
@@ -407,14 +425,29 @@ namespace graf
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(dirc);
-            XmlElement xRoot = xDoc.DocumentElement;
-            XmlNode af = xRoot.Attributes.GetNamedItem("max_size");
+            XmlElement xRootVersion = xDoc.DocumentElement;
+            XmlNode af = xRootVersion.Attributes.GetNamedItem("id");
+            string version = af.Value;
+            if (version != programVersion)
+            {
+                MessageBox.Show("Error: Could not read file from disk. Original error: " + "Несовпадение версий");
+                return;
+            }
+
+            XmlNode xRoot = xRootVersion.ChildNodes[0];
+            af = xRoot.Attributes.GetNamedItem("max_size");
             int maxSz = int.Parse(af.Value);
             fs.setMaxSize(maxSz);
+
 
             foreach (XmlNode xnode in xRoot)
             {
                 int index = -1;
+                int weight = -1;
+                foreach(XmlNode vertexInfo in xnode)
+                {
+
+                }
                 if (xnode.Attributes.Count > 0)
                 {
                     XmlNode attr = xnode.Attributes.GetNamedItem("index");
@@ -443,15 +476,16 @@ namespace graf
                     }
                     else if (childnode.Name == "edges")
                     {
-                        foreach(XmlNode edge in childnode.ChildNodes)
+                        foreach (XmlNode edge in childnode.ChildNodes)
                         {
                             if (edge.Attributes.Count > 0)
                             {
                                 XmlNode attr = edge.Attributes.GetNamedItem("value");
+                                XmlNode attr2 = edge.Attributes.GetNamedItem("weight");
                                 if (attr != null)
                                 {
                                     Console.WriteLine("edge index: {0}", attr.Value);
-                                    fs.addEdge(index, int.Parse(attr.Value));
+                                    fs.addEdge(index, int.Parse(attr.Value), int.Parse(attr2.Value));
                                 }
                             }
                         }
@@ -461,10 +495,7 @@ namespace graf
             fs.drawGraph();
         }
 
-        private void загрузитьТестToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bFSToolStripMenuItem_Click(sender, e);
-        }
+
 
         private void weightVertexRB_Click(object sender, EventArgs e)
         {
