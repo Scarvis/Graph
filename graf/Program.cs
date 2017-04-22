@@ -11,12 +11,17 @@ namespace graf
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
+
+        const string programVersion = "3.0";
+
+
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1 Forma = new Form1();
+            Form1 Forma = new Form1(programVersion);
             treeForm treeForms = new treeForm();
             System.IO.StreamReader file = new System.IO.StreamReader("data\\lastInclusion.txt");
             string lineFromFile;

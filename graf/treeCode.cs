@@ -532,7 +532,6 @@ namespace graf
                     }
                 }
                 setHeight();
-                //reconstr();
                 return true;
             }
 

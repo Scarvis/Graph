@@ -41,6 +41,7 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьТестToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.загрузитьТестToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отменадействияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,15 +61,22 @@
             this.back = new System.Windows.Forms.Button();
             this.forward = new System.Windows.Forms.Button();
             this.bfs = new System.Windows.Forms.Button();
-            this.загрузитьТестToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.prima = new System.Windows.Forms.Button();
+            this.weightVertexLabel = new System.Windows.Forms.Label();
+            this.weightVertexTextBox = new System.Windows.Forms.TextBox();
+            this.lastWeightVertexLabel = new System.Windows.Forms.Label();
+            this.lastWeightVertexTextBox = new System.Windows.Forms.TextBox();
+            this.weightVertexRB = new System.Windows.Forms.RadioButton();
+            this.algorithmPrimaSumVertexTextBox = new System.Windows.Forms.TextBox();
+            this.algorithmPrimaSumVertexLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(753, 391);
+            this.textBox1.Location = new System.Drawing.Point(753, 536);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
@@ -82,14 +90,14 @@
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.pictureBox1.Location = new System.Drawing.Point(24, 50);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(964, 307);
+            this.pictureBox1.Size = new System.Drawing.Size(964, 446);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // vertex
             // 
-            this.vertex.Location = new System.Drawing.Point(114, 369);
+            this.vertex.Location = new System.Drawing.Point(114, 514);
             this.vertex.Name = "vertex";
             this.vertex.Size = new System.Drawing.Size(84, 46);
             this.vertex.TabIndex = 2;
@@ -99,7 +107,7 @@
             // 
             // edge
             // 
-            this.edge.Location = new System.Drawing.Point(204, 370);
+            this.edge.Location = new System.Drawing.Point(204, 515);
             this.edge.Name = "edge";
             this.edge.Size = new System.Drawing.Size(84, 45);
             this.edge.TabIndex = 3;
@@ -109,7 +117,7 @@
             // 
             // view
             // 
-            this.view.Location = new System.Drawing.Point(24, 369);
+            this.view.Location = new System.Drawing.Point(24, 514);
             this.view.Name = "view";
             this.view.Size = new System.Drawing.Size(84, 46);
             this.view.TabIndex = 4;
@@ -119,7 +127,7 @@
             // 
             // dfs
             // 
-            this.dfs.Location = new System.Drawing.Point(564, 371);
+            this.dfs.Location = new System.Drawing.Point(564, 516);
             this.dfs.Name = "dfs";
             this.dfs.Size = new System.Drawing.Size(84, 45);
             this.dfs.TabIndex = 5;
@@ -129,7 +137,7 @@
             // 
             // delVertex
             // 
-            this.delVertex.Location = new System.Drawing.Point(294, 370);
+            this.delVertex.Location = new System.Drawing.Point(294, 515);
             this.delVertex.Name = "delVertex";
             this.delVertex.Size = new System.Drawing.Size(84, 45);
             this.delVertex.TabIndex = 6;
@@ -139,7 +147,7 @@
             // 
             // delEdge
             // 
-            this.delEdge.Location = new System.Drawing.Point(384, 370);
+            this.delEdge.Location = new System.Drawing.Point(384, 515);
             this.delEdge.Name = "delEdge";
             this.delEdge.Size = new System.Drawing.Size(84, 45);
             this.delEdge.TabIndex = 7;
@@ -149,7 +157,7 @@
             // 
             // delGraph
             // 
-            this.delGraph.Location = new System.Drawing.Point(474, 371);
+            this.delGraph.Location = new System.Drawing.Point(474, 516);
             this.delGraph.Name = "delGraph";
             this.delGraph.Size = new System.Drawing.Size(84, 45);
             this.delGraph.TabIndex = 8;
@@ -169,7 +177,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(15, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(1010, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1246, 24);
             this.menuStrip.TabIndex = 9;
             this.menuStrip.Text = "menuStrip1";
             this.menuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip_ItemClicked);
@@ -191,6 +199,13 @@
             this.сохранитьТестToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.сохранитьТестToolStripMenuItem.Text = "Сохранить Тест";
             this.сохранитьТестToolStripMenuItem.Click += new System.EventHandler(this.сохранитьТестToolStripMenuItem_Click);
+            // 
+            // загрузитьТестToolStripMenuItem
+            // 
+            this.загрузитьТестToolStripMenuItem.Name = "загрузитьТестToolStripMenuItem";
+            this.загрузитьТестToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.загрузитьТестToolStripMenuItem.Text = "Загрузить тест";
+            this.загрузитьТестToolStripMenuItem.Click += new System.EventHandler(this.загрузитьТестToolStripMenuItem_Click);
             // 
             // выходToolStripMenuItem
             // 
@@ -336,7 +351,7 @@
             // 
             // bfs
             // 
-            this.bfs.Location = new System.Drawing.Point(654, 371);
+            this.bfs.Location = new System.Drawing.Point(654, 516);
             this.bfs.Name = "bfs";
             this.bfs.Size = new System.Drawing.Size(84, 45);
             this.bfs.TabIndex = 13;
@@ -344,26 +359,99 @@
             this.bfs.UseVisualStyleBackColor = true;
             this.bfs.Click += new System.EventHandler(this.bfs_Click);
             // 
-            // загрузитьТестToolStripMenuItem
-            // 
-            this.загрузитьТестToolStripMenuItem.Name = "загрузитьТестToolStripMenuItem";
-            this.загрузитьТестToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.загрузитьТестToolStripMenuItem.Text = "Загрузить тест";
-            this.загрузитьТестToolStripMenuItem.Click += new System.EventHandler(this.загрузитьТестToolStripMenuItem_Click);
-            // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(753, 371);
+            this.progressBar.Location = new System.Drawing.Point(753, 516);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(235, 21);
             this.progressBar.TabIndex = 14;
+            // 
+            // prima
+            // 
+            this.prima.Location = new System.Drawing.Point(1008, 59);
+            this.prima.Name = "prima";
+            this.prima.Size = new System.Drawing.Size(216, 38);
+            this.prima.TabIndex = 15;
+            this.prima.Text = "Алгоритм Прима";
+            this.prima.UseVisualStyleBackColor = true;
+            this.prima.Click += new System.EventHandler(this.prima_Click);
+            // 
+            // weightVertexLabel
+            // 
+            this.weightVertexLabel.AutoSize = true;
+            this.weightVertexLabel.Location = new System.Drawing.Point(1005, 200);
+            this.weightVertexLabel.Name = "weightVertexLabel";
+            this.weightVertexLabel.Size = new System.Drawing.Size(59, 13);
+            this.weightVertexLabel.TabIndex = 16;
+            this.weightVertexLabel.Text = "Вес ребра";
+            // 
+            // weightVertexTextBox
+            // 
+            this.weightVertexTextBox.Location = new System.Drawing.Point(1006, 227);
+            this.weightVertexTextBox.Name = "weightVertexTextBox";
+            this.weightVertexTextBox.Size = new System.Drawing.Size(123, 20);
+            this.weightVertexTextBox.TabIndex = 17;
+            // 
+            // lastWeightVertexLabel
+            // 
+            this.lastWeightVertexLabel.AutoSize = true;
+            this.lastWeightVertexLabel.Location = new System.Drawing.Point(1011, 266);
+            this.lastWeightVertexLabel.Name = "lastWeightVertexLabel";
+            this.lastWeightVertexLabel.Size = new System.Drawing.Size(115, 13);
+            this.lastWeightVertexLabel.TabIndex = 18;
+            this.lastWeightVertexLabel.Text = "последний вес ребра";
+            // 
+            // lastWeightVertexTextBox
+            // 
+            this.lastWeightVertexTextBox.Location = new System.Drawing.Point(1007, 300);
+            this.lastWeightVertexTextBox.Name = "lastWeightVertexTextBox";
+            this.lastWeightVertexTextBox.ReadOnly = true;
+            this.lastWeightVertexTextBox.Size = new System.Drawing.Size(121, 20);
+            this.lastWeightVertexTextBox.TabIndex = 19;
+            // 
+            // weightVertexRB
+            // 
+            this.weightVertexRB.AutoSize = true;
+            this.weightVertexRB.Location = new System.Drawing.Point(1143, 217);
+            this.weightVertexRB.Name = "weightVertexRB";
+            this.weightVertexRB.Size = new System.Drawing.Size(81, 30);
+            this.weightVertexRB.TabIndex = 20;
+            this.weightVertexRB.TabStop = true;
+            this.weightVertexRB.Text = "Запомнить\r\nвес";
+            this.weightVertexRB.UseVisualStyleBackColor = true;
+            this.weightVertexRB.Click += new System.EventHandler(this.weightVertexRB_Click);
+            // 
+            // algorithmPrimaSumVertexTextBox
+            // 
+            this.algorithmPrimaSumVertexTextBox.Location = new System.Drawing.Point(1008, 143);
+            this.algorithmPrimaSumVertexTextBox.Name = "algorithmPrimaSumVertexTextBox";
+            this.algorithmPrimaSumVertexTextBox.ReadOnly = true;
+            this.algorithmPrimaSumVertexTextBox.Size = new System.Drawing.Size(123, 20);
+            this.algorithmPrimaSumVertexTextBox.TabIndex = 21;
+            // 
+            // algorithmPrimaSumVertexLabel
+            // 
+            this.algorithmPrimaSumVertexLabel.AutoSize = true;
+            this.algorithmPrimaSumVertexLabel.Location = new System.Drawing.Point(1005, 115);
+            this.algorithmPrimaSumVertexLabel.Name = "algorithmPrimaSumVertexLabel";
+            this.algorithmPrimaSumVertexLabel.Size = new System.Drawing.Size(59, 13);
+            this.algorithmPrimaSumVertexLabel.TabIndex = 22;
+            this.algorithmPrimaSumVertexLabel.Text = "Вес ребер";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1010, 432);
+            this.ClientSize = new System.Drawing.Size(1246, 590);
+            this.Controls.Add(this.algorithmPrimaSumVertexLabel);
+            this.Controls.Add(this.algorithmPrimaSumVertexTextBox);
+            this.Controls.Add(this.weightVertexRB);
+            this.Controls.Add(this.lastWeightVertexTextBox);
+            this.Controls.Add(this.lastWeightVertexLabel);
+            this.Controls.Add(this.weightVertexTextBox);
+            this.Controls.Add(this.weightVertexLabel);
+            this.Controls.Add(this.prima);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.bfs);
             this.Controls.Add(this.forward);
@@ -426,6 +514,14 @@
         private System.Windows.Forms.ToolStripMenuItem сохранитьТестToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem загрузитьТестToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Button prima;
+        private System.Windows.Forms.Label weightVertexLabel;
+        private System.Windows.Forms.TextBox weightVertexTextBox;
+        private System.Windows.Forms.Label lastWeightVertexLabel;
+        private System.Windows.Forms.TextBox lastWeightVertexTextBox;
+        private System.Windows.Forms.RadioButton weightVertexRB;
+        private System.Windows.Forms.TextBox algorithmPrimaSumVertexTextBox;
+        private System.Windows.Forms.Label algorithmPrimaSumVertexLabel;
     }
 }
 

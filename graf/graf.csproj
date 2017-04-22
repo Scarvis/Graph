@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Config.txt" />
     <Content Include="data\lastInclusion.txt" />
     <Content Include="Resources\backIcon.png" />
     <Content Include="Resources\forwardIcon.png" />

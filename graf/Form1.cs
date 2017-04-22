@@ -14,14 +14,19 @@ namespace graf
 {
     public partial class Form1 : Form
     {
-        public Form1()
+
+        string programVersion;
+
+        public Form1(string programVersion)
         {
             InitializeComponent();
+            this.programVersion = programVersion;
             
         }
 
         public bool isTreeOrGraph = false;
         public bool closeForm = true;
+        private bool lastRBSelect = false;
         graph fs;   //граф и рисование графа
 
         private void Form1_Load(object sender, EventArgs e)
@@ -48,7 +53,27 @@ namespace graf
             }
             else if (!edge.Enabled)
             {
-                fs.hitVertex(point);
+                string fr = weightVertexTextBox.Text;
+                int num;
+                if (int.TryParse(fr, out num))
+                {
+                    num = int.Parse(fr);
+                    if (fs.hitVertex(point, num))
+                    {
+                        lastWeightVertexTextBox.Text = num.ToString();
+                        if (!weightVertexRB.Checked)
+                            weightVertexTextBox.Text = "";
+                    }
+                }
+                else
+                {
+                    Random x = new Random();
+                    num = x.Next(0, 200);
+                    if (fs.hitVertex(point))
+                    {
+                        lastWeightVertexTextBox.Text = num.ToString();
+                    }
+                }
             }
             else if (!delVertex.Enabled)
             {
@@ -81,6 +106,10 @@ namespace graf
                     fs.bfs(v,progressBar);
                     textBox1.Text = "BFS закончен";
                 }
+            }
+            else
+            {
+                fs.drawGraph();
             }
         }
 
@@ -435,6 +464,22 @@ namespace graf
         private void загрузитьТестToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bFSToolStripMenuItem_Click(sender, e);
+        }
+
+        private void weightVertexRB_Click(object sender, EventArgs e)
+        {
+            if (!lastRBSelect)
+                weightVertexRB.Checked = true;
+            else
+                weightVertexRB.Checked = false;
+            if (!lastRBSelect) lastRBSelect = true;
+            else lastRBSelect = false;
+        }
+
+        private void prima_Click(object sender, EventArgs e)
+        {
+            string algorithmPrimaString = fs.algorithmPrima();
+            algorithmPrimaSumVertexTextBox.Text = algorithmPrimaString;
         }
     }
 }
