@@ -525,5 +525,10 @@ namespace graf
             string algorithmPrimaString = fs.algorithmPrima();
             algorithmPrimaSumVertexTextBox.Text = algorithmPrimaString;
         }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            fs.drawGraph();
+        }
     }
 }

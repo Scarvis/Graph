@@ -110,8 +110,8 @@ namespace graf
                     );
                 var pts = new PointF((v1.x + v2.x) / 2, (v1.y + v2.y) / 2);
                 gr.DrawString(weight.ToString(), new Font("Arial", 20), Brushes.Blue, pts);
-                drawVertex(v1.x, v1.y, v1.index + 1);
-                drawVertex(v2.x, v2.y, v2.index + 1);
+                //drawVertex(v1.x, v1.y, v1.curIndex + 1);
+                //drawVertex(v2.x, v2.y, v2.curIndex + 1);
             }
             /// <summary>
             /// Вычисление точки пересечения с окружностью
@@ -143,20 +143,39 @@ namespace graf
 
         public class vertex
         {
-            public struct versina
+            public class versina
             {
                 public int to;
                 public int weight;
+
+                public versina()
+                {
+                    to = -1;
+                    weight = -1;
+                }
                 public versina(int to, int weight)
                 {
                     this.to = to;
                     this.weight = weight;
                 }
+                public override bool Equals(object obj)
+                {
+                    if (obj == null)
+                    {
+                        return false;
+                    }
+                    versina p = obj as versina;
+                    return this.to == p.to && this.weight == p.weight;
+                }
+                
             }
+
             public List<versina> col = new List<versina>();
             public Tuple <int, int> buf;
             public int x, y;
             public int index = 0;
+            public int curIndex = 0;
+            bool isDel = false;
             public vertex()
             {
                 x = 0;
@@ -180,20 +199,62 @@ namespace graf
             }
             public List<vertex> delVertex(int v, List<vertex> f)
             {
-                //foreach (var i in f[v].col)
-                //{
-                //    f[i].col.Remove(v); //иначе эта конструкция
-                //    for (int j = f[i].col.Count - 1; j >= 0; --j)
-                //    {
-                //        if (f[i].col[j] >= v+1)
-                //        {
-                //            f[i].col[j]--;
-                //        }
-                //    }
-                //}
-                //f[v].col.Clear();
-                //f.RemoveAt(v);
+                for (int i = 0; i < f[v].col.Count; i++)
+                {
+                    int it = f[v].col[i].to;
+                    f[it].col.Remove(new versina(v, f[v].col[i].weight)); 
+                }
+                f[v].col.Clear();
+                f[v].curIndex = -1;
+                f[v].x = -1123;
+                f[v].y = -1123;
+                
+                f[v].isDel = true;
                 return f;
+            }
+
+            public bool delEdge(List<vertex> g, Point pt)
+            {
+                Point e = pt;
+                for (int i = 0; i < g.Count; ++i)
+                {
+                    if (!g[i].ifDelVert())
+                    {
+                        for (int j = 0; j < g[i].col.Count; j++)
+                        {
+                            if (!g[g[i].col[j].to].ifDelVert())
+                            {
+                                //g[g[i].col[j]] вершина в которую ведет ребро из g[i]
+                                if (((e.X - g[i].x) * (g[g[i].col[j].to].y - g[i].y) / (g[g[i].col[j].to].x - g[i].x) + g[i].y) <= (e.Y + 4) &&
+                                                ((e.X - g[i].x) * (g[i].y - g[i].y) / (g[g[i].col[j].to].x - g[i].x) + g[i].y) >= (e.Y - 4))
+                                {
+                                    if ((g[i].x <= g[g[i].col[j].to].x && g[i].x <= e.X && e.X <= g[g[i].col[j].to].x) ||
+                                        (g[i].x >= g[g[i].col[j].to].x && g[i].x >= e.X && e.X >= g[g[i].col[j].to].x))
+                                    {
+                                        int u = i;
+                                        var v = g[i].col[j].to;
+                                        g[u].col.RemoveAt(j);
+                                        for (int it = 0; it < g[v].col.Count; ++it)
+                                        {
+                                            if (g[v].col[it].to == i)
+                                            {
+                                                g[v].col.RemoveAt(it);
+                                                break;
+                                            }
+                                        }
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+
+            public bool ifDelVert()
+            {
+                return isDel;
             }
         }
 
@@ -206,6 +267,7 @@ namespace graf
         */
         int v1, v2;
         const int INF = 1000000000;
+        int maxCurIndex = 0;
         /*
          * графическое отображение графа
          */
@@ -234,16 +296,22 @@ namespace graf
         public List<List<int>> getMatSmezh()
         {
             List<List<int>> res = new List<List<int>>();
+            int k = 0;
             for (int i = 0; i < g.Count; ++i)
             {
-                res.Add(new List<int>());
-                for(int it = 0; it < g.Count; ++it)
+                if (!g[i].ifDelVert())
                 {
-                    res[i].Add(INF);
-                }
-                for(int j = 0; j < g[i].col.Count; ++j)
-                {
-                    res[i][g[i].col[j].to] = g[i].col[j].weight;
+                    res.Add(new List<int>());
+                    for (int it = 0; it < g.Count; ++it)
+                    {
+                        if (!g[it].ifDelVert())
+                            res[k].Add(INF);
+                    }
+                    for (int j = 0; j < g[i].col.Count; ++j)
+                    {
+                        res[k][g[g[i].col[j].to].curIndex] = g[i].col[j].weight;
+                    }
+                    k++;
                 }
             }
 
@@ -256,11 +324,12 @@ namespace graf
             {
                 g.Add(new vertex());
             }
+            maxCurIndex = max_size;
         }
 
         public int size()
         {
-            return g.Count;
+            return maxCurIndex;
         }
 
         public bool addVertex(Point point)
@@ -270,6 +339,8 @@ namespace graf
             {
                 g.Add(new vertex(point.X, point.Y));
                 g[g.Count - 1].index = g.Count - 1;
+                g[g.Count - 1].curIndex = maxCurIndex;
+                maxCurIndex++;
                 return true;
             }
             else
@@ -283,14 +354,14 @@ namespace graf
         {
             g[index].x = pt.X;
             g[index].y = pt.Y;
-            g[index].index = index;
+            g[index].curIndex = index;
         }
 
         public void drawVertex(int x, int y, int indexVertex = -2)
         {
             if (indexVertex == -2)
             {
-                gr.drawVertex(x, y, g.Count);
+                gr.drawVertex(x, y, maxCurIndex);
             }
             else
             {
@@ -342,8 +413,10 @@ namespace graf
                         g[v1].add(v2, weight);
                         g[v2].add(v1, weight);
                         gr.drawEdge(g[v1], g[v2], weight);
+                        gr.drawSelectedVertex(g[v1].x, g[v1].y, new Pen(Color.Black, 2));
                         v1 = v2 = -1;
                         isCheck = true;
+                        break;
                     }
                 }
             }
@@ -376,15 +449,20 @@ namespace graf
             {
                 used.Add(false);
             }
+            int k = 0;
             for (int i = 0; i < g.Count; i++)
             {
-                if(!used[i] && i > 0)
+                if (!g[i].ifDelVert())
                 {
-                    isCheck = false;
-                }
-                if (!used[i])
-                {
-                    dfs(i, used);
+                    if (!used[i] && k > 0)
+                    {
+                        isCheck = false;
+                    }
+                    if (!used[i])
+                    {
+                        dfs(i, used);
+                        k = 1;
+                    }
                 }
             }
             return isCheck;
@@ -407,7 +485,7 @@ namespace graf
         {
             if (!connected()) return "несвязный граф";
             var G = getMatSmezh();
-            int n = g.Count;
+            int n = maxCurIndex;
             int weightGraph = 0;
             List<Tuple<int, int, int>> ans = new List<Tuple<int, int, int>>();
             // значение "бесконечность"
@@ -437,7 +515,7 @@ namespace graf
                 used[v] = true;
                 if (sel_e[v] != -1)
                 {
-                    //Console.WriteLine((v + 1).ToString() + " " + (sel_e[v] + 1).ToString());
+                    //onsole.WriteLine((v + 1).ToString() + " " + (sel_e[v] + 1).ToString());
                     weightGraph += G[v][sel_e[v]];
                     ans.Add(new Tuple<int, int, int>(v, sel_e[v], G[v][sel_e[v]]));
                 }
@@ -452,25 +530,34 @@ namespace graf
                 }
             }
 
+            List<Tuple<int, int, int>> buf = new List<Tuple<int, int, int>>();
+            for (int i = 0; i < ans.Count; ++i)
+            {
+                int l = -1, r = -1;
+                for(int j = 0; j < g.Count; j++)
+                {
+                    int u = ans[i].Item1;
+                    int v = ans[i].Item2;
+                    if (g[j].curIndex == u)
+                        l = j;
+                    if (g[j].curIndex == v)
+                        r = j;
+                    if (l != -1 && r != -1)
+                        break;
+                }
+                buf.Add(new Tuple<int, int, int>(l, r, ans[i].Item3));
+            }
+
+            ans = buf;
             for(int i = 0; i < ans.Count; ++i)
             {
                 int u = ans[i].Item1;
                 int v = ans[i].Item2;
                 int weight = ans[i].Item3;
                 Pen redPens = new Pen(Color.Red, 7) { StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor};
-                gr.drawEdge(new vertex(g[u].x, g[u].y, g[u].index), new vertex(g[v].x, g[v].y, g[v].index), weight, redPens);
+                gr.drawEdge(new vertex(g[u].x, g[u].y, g[u].curIndex), new vertex(g[v].x, g[v].y, g[v].curIndex), weight, redPens);
             }
             
-
-            //const string caption = "Алгоритм Прима";
-            //string message = "Сумма ребер = " + weightGraph.ToString();
-            //var aboutProg = MessageBox.Show(
-            //    message
-            //    , caption
-
-            //    );
-
-
             return weightGraph.ToString();
         }
 
@@ -547,41 +634,45 @@ namespace graf
 
         public void delVertex(int v)
         {
+            maxCurIndex--;
             g = g[v].delVertex(v, g);
-            for(int i = 0; i < g.Count; ++i)
+            int indexVert = 0;
+            for (int i = 0; i < g.Count; ++i)
             {
-                if (g[i].index != i)
-                    g[i].index = i;
+                if (!g[i].ifDelVert())
+                {
+                    g[i].curIndex = indexVert;
+                    indexVert++;
+                }
             }
         }
 
         public bool delEdge(Point pt)
         {
+            return g[0].delEdge(g, pt);
             Point e = pt;
-            for(int i = 0; i < g.Count; ++i)
+            for (int i = 0; i < g.Count; ++i)
             {
-                for (int j = 0; j < g[i].col.Count; j++)
+                if (!g[i].ifDelVert())
                 {
-                    //g[g[i].col[j]] вершина в которую ведет ребро из g[i]
-                    if (((e.X - g[i].x) * (g[g[i].col[j].to].y - g[i].y) / (g[g[i].col[j].to].x - g[i].x) + g[i].y) <= (e.Y + 4) &&
-                                    ((e.X - g[i].x) * (g[i].y - g[i].y) / (g[g[i].col[j].to].x - g[i].x) + g[i].y) >= (e.Y - 4))
+                    for (int j = 0; j < g[i].col.Count; j++)
                     {
-                        if ((g[i].x <= g[g[i].col[j].to].x && g[i].x <= e.X && e.X <= g[g[i].col[j].to].x) ||
-                            (g[i].x >= g[g[i].col[j].to].x && g[i].x >= e.X && e.X >= g[g[i].col[j].to].x))
+                        if (!g[g[i].col[j].to].ifDelVert())
                         {
-                            int u = i;
-                            var v = g[g[i].col[j].to].index;
-                            g[u].col.RemoveAt(j);
-                            //g[v].col.Remove(new vertex.versina(u, g[i].col[j].weight));
-                            for(int k = 0; k < g[v].col.Count; ++k)
+                            //g[g[i].col[j]] вершина в которую ведет ребро из g[i]
+                            if (((e.X - g[i].x) * (g[g[i].col[j].to].y - g[i].y) / (g[g[i].col[j].to].x - g[i].x) + g[i].y) <= (e.Y + 4) &&
+                                            ((e.X - g[i].x) * (g[i].y - g[i].y) / (g[g[i].col[j].to].x - g[i].x) + g[i].y) >= (e.Y - 4))
                             {
-                                if(g[v].col[k].to==i)
+                                if ((g[i].x <= g[g[i].col[j].to].x && g[i].x <= e.X && e.X <= g[g[i].col[j].to].x) ||
+                                    (g[i].x >= g[g[i].col[j].to].x && g[i].x >= e.X && e.X >= g[g[i].col[j].to].x))
                                 {
-                                    g[v].col.RemoveAt(k);
-                                    break;
+                                    int u = i;
+                                    var v = g[i].col[j].to;
+                                    g[u].col.RemoveAt(j);
+                                    g[v].col.Remove(new vertex.versina(u, g[i].col[j].weight));
+                                    return true;
                                 }
                             }
-                            return true;
                         }
                     }
                 }
@@ -594,8 +685,9 @@ namespace graf
         {
             gr.clearPicture();
             g.Clear();
+            maxCurIndex = 0;
         }
-
+  
         public void clearPicture()
         {
             gr.clearPicture();
@@ -607,20 +699,29 @@ namespace graf
 
             for(int i = 0; i < g.Count; ++i)
             {
-                for (int j = 0; j < g[i].col.Count; ++j)
+                if (!g[i].ifDelVert())
                 {
-                    if (!matrix[g[i].index, g[g[i].col[j].to].index] )
+                    for (int j = 0; j < g[i].col.Count; ++j)
                     {
-                        gr.drawEdge(g[i], g[g[i].col[j].to], g[i].col[j].weight);
-                        matrix[g[i].index, g[g[i].col[j].to].index] = true;
-                        matrix[g[g[i].col[j].to].index, g[i].index] = true;
+                        if (!g[g[i].col[j].to].ifDelVert())
+                        {
+                            if (!matrix[g[i].curIndex, g[g[i].col[j].to].curIndex])
+                            {
+                                gr.drawEdge(g[i], g[g[i].col[j].to], g[i].col[j].weight);
+                                matrix[g[i].curIndex, g[g[i].col[j].to].curIndex] = true;
+                                matrix[g[g[i].col[j].to].curIndex, g[i].curIndex] = true;
+                            }
+                        }
                     }
                 }
             }
 
             for(int i = 0; i < g.Count; ++i)
             {
-                drawVertex(g[i].x, g[i].y, g[i].index + 1);
+                if (!g[i].ifDelVert())
+                {
+                    drawVertex(g[i].x, g[i].y, g[i].curIndex + 1);
+                }
             }
         }
 
