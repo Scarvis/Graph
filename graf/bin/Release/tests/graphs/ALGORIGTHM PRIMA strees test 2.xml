@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<programm_version id="3.0">
+  <vertex max_size="19">
+    <number index="0">
+      <x>127</x>
+      <y>311</y>
+      <edges>
+        <index value="15" weight="40" />
+        <index value="1" weight="114" />
+        <index value="16" weight="185" />
+        <index value="18" weight="110" />
+        <index value="17" weight="159" />
+      </edges>
+    </number>
+    <number index="1">
+      <x>271</x>
+      <y>355</y>
+      <edges>
+        <index value="16" weight="86" />
+        <index value="2" weight="64" />
+        <index value="0" weight="114" />
+        <index value="18" weight="43" />
+      </edges>
+    </number>
+    <number index="2">
+      <x>399</x>
+      <y>376</y>
+      <edges>
+        <index value="1" weight="64" />
+        <index value="3" weight="17" />
+        <index value="16" weight="41" />
+      </edges>
+    </number>
+    <number index="3">
+      <x>544</x>
+      <y>366</y>
+      <edges>
+        <index value="2" weight="17" />
+        <index value="4" weight="156" />
+        <index value="16" weight="157" />
+      </edges>
+    </number>
+    <number index="4">
+      <x>697</x>
+      <y>363</y>
+      <edges>
+        <index value="3" weight="156" />
+        <index value="5" weight="70" />
+        <index value="16" weight="24" />
+      </edges>
+    </number>
+    <number index="5">
+      <x>798</x>
+      <y>311</y>
+      <edges>
+        <index value="4" weight="70" />
+        <index value="6" weight="90" />
+        <index value="16" weight="156" />
+      </edges>
+    </number>
+    <number index="6">
+      <x>831</x>
+      <y>232</y>
+      <edges>
+        <index value="5" weight="90" />
+        <index value="7" weight="108" />
+        <index value="16" weight="23" />
+      </edges>
+    </number>
+    <number index="7">
+      <x>842</x>
+      <y>95</y>
+      <edges>
+        <index value="6" weight="108" />
+        <index value="8" weight="111" />
+        <index value="16" weight="39" />
+      </edges>
+    </number>
+    <number index="8">
+      <x>760</x>
+      <y>39</y>
+      <edges>
+        <index value="7" weight="111" />
+        <index value="9" weight="25" />
+        <index value="16" weight="56" />
+      </edges>
+    </number>
+    <number index="9">
+      <x>656</x>
+      <y>20</y>
+      <edges>
+        <index value="8" weight="25" />
+        <index value="10" weight="66" />
+        <index value="16" weight="19" />
+      </edges>
+    </number>
+    <number index="10">
+      <x>527</x>
+      <y>24</y>
+      <edges>
+        <index value="9" weight="66" />
+        <index value="11" weight="161" />
+        <index value="16" weight="191" />
+      </edges>
+    </number>
+    <number index="11">
+      <x>422</x>
+      <y>21</y>
+      <edges>
+        <index value="10" weight="161" />
+        <index value="12" weight="10" />
+        <index value="16" weight="153" />
+      </edges>
+    </number>
+    <number index="12">
+      <x>264</x>
+      <y>38</y>
+      <edges>
+        <index value="11" weight="10" />
+        <index value="13" weight="124" />
+        <index value="16" weight="169" />
+      </edges>
+    </number>
+    <number index="13">
+      <x>166</x>
+      <y>76</y>
+      <edges>
+        <index value="12" weight="124" />
+        <index value="14" weight="70" />
+        <index value="16" weight="143" />
+      </edges>
+    </number>
+    <number index="14">
+      <x>80</x>
+      <y>122</y>
+      <edges>
+        <index value="13" weight="70" />
+        <index value="15" weight="112" />
+        <index value="16" weight="152" />
+      </edges>
+    </number>
+    <number index="15">
+      <x>49</x>
+      <y>196</y>
+      <edges>
+        <index value="14" weight="112" />
+        <index value="0" weight="40" />
+        <index value="16" weight="137" />
+        <index value="17" weight="180" />
+      </edges>
+    </number>
+    <number index="16">
+      <x>474</x>
+      <y>161</y>
+      <edges>
+        <index value="1" weight="86" />
+        <index value="0" weight="185" />
+        <index value="2" weight="41" />
+        <index value="3" weight="157" />
+        <index value="4" weight="24" />
+        <index value="5" weight="156" />
+        <index value="6" weight="23" />
+        <index value="7" weight="39" />
+        <index value="8" weight="56" />
+        <index value="10" weight="191" />
+        <index value="9" weight="19" />
+        <index value="11" weight="153" />
+        <index value="12" weight="169" />
+        <index value="13" weight="143" />
+        <index value="14" weight="152" />
+        <index value="15" weight="137" />
+      </edges>
+    </number>
+    <number index="17">
+      <x>18</x>
+      <y>349</y>
+      <edges>
+        <index value="0" weight="159" />
+        <index value="15" weight="180" />
+      </edges>
+    </number>
+    <number index="18">
+      <x>61</x>
+      <y>398</y>
+      <edges>
+        <index value="0" weight="110" />
+        <index value="1" weight="43" />
+      </edges>
+    </number>
+  </vertex>
+</programm_version>
