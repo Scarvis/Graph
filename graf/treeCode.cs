@@ -45,6 +45,15 @@ namespace graf
                 gr.DrawString(buf, fo, br, point.X - (buf.Count<char>()) * 2, point.Y);
             }
 
+            public void drawVertex(int x, int y, int lastVertex, Pen customPen, int R = 20)
+            {
+                gr.FillEllipse(Brushes.White, (x - R), (y - R), 2 * R, 2 * R);
+                gr.DrawEllipse(customPen, (x - R), (y - R), 2 * R, 2 * R);
+                point = new PointF(x - 9, y - 9);
+                string buf = Convert.ToString(lastVertex);
+                gr.DrawString(buf, fo, br, point.X - (buf.Count<char>()) * 2, point.Y);
+            }
+
             public void drawEdge
                 (
                   int x1
@@ -66,17 +75,31 @@ namespace graf
                 drawVertex(x2, y2, indexv2);
             }
 
-            public void drawHeight(binaryTree.node val)
+            public void drawEdge(binaryTree.node left, binaryTree.node right, Pen customPen)
             {
+                gr.DrawLine(
+                    customPen
+                    , left.x
+                    , left.y
+                    , right.x
+                    , right.y
+                    );
+            }
+
+            public void drawHeight(binaryTree.node val, Brush customBr = null)
+            {
+                if (customBr == null)
+                    customBr = br;
                 string buf1 = val.getHeightLeftSon().ToString();
                 string buf2 = val.getHeightRightSon().ToString();
                 string buf = buf1 + ' ' + buf2;
-                gr.DrawString(buf, new Font("Arial", 8), br, val.x - (buf.Count<char>()) * 2 - 4, val.y - 30);
+                gr.DrawString(buf, new Font("Arial", 8), customBr, val.x - (buf.Count<char>()) * 2 - 4, val.y - 30);
             }
 
             public void clearPicture()
             {
                 gr.Clear(Color.White);
+                
             }
         }
 
@@ -264,6 +287,10 @@ namespace graf
                 }
                 v = finder.index;
                 hNode++;
+                if (value == finder.value)
+                {
+                    return new node(-777, -777, -777);
+                }
                 if (value > finder.value)
                 {
 
@@ -328,8 +355,9 @@ namespace graf
                         }
                         //finder.incrementHeightLeftSon();
                     }
-                    if (res.parent.rightSon == null && !addNewLevel)
-                        addNewLevel = true;
+                    if (parent != null)
+                        if (res.parent.rightSon == null && !addNewLevel)
+                            addNewLevel = true;
                     return res;
                 }
                 else
@@ -636,7 +664,45 @@ namespace graf
 
         public void clearScreen()
         {
-            graphics.clearPicture();
+//            graphics.clearPicture();
+            var temp = avlTree.getListTree();
+
+            for (int i = 0; i < temp.Count; ++i)
+            {
+                graphics.drawVertex(temp[i].x, temp[i].y, temp[i].value, new Pen(Color.White, 2));
+
+            }
+            if (temp.Count > 0)
+                drawEdgesFromClearScreen(temp[0]);
+            
+            for (int i = 0; i < temp.Count; ++i)
+            {
+                graphics.drawHeight(temp[i], Brushes.White);
+            }
+        }
+
+        //рекурсия для стирания линий
+        private void drawEdgesFromClearScreen(binaryTree.node v)
+        {
+            if (v == null) return;
+            if (v.leftSon != null)
+            {
+                graphics.drawEdge(v, v.leftSon, new Pen(Color.White, 2));
+                drawEdgesFromDrawTree(v.leftSon);
+            }
+            if (v.rightSon != null)
+            {
+                graphics.drawEdge(v, v.rightSon, new Pen(Color.White, 2));
+                //graphics.drawEdge(
+                //    v.x,
+                //    v.y,
+                //    v.rightSon.x,
+                //    v.rightSon.y,
+                //    v.value,
+                //    v.rightSon.value
+                //    );
+                drawEdgesFromDrawTree(v.rightSon);
+            }
         }
 
         //рекурсия для рисования линий

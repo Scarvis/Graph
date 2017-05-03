@@ -23,6 +23,7 @@ namespace graf
         public bool closeForm = true;
         treeCode avlTree;
         Queue<int> saveTree = new Queue<int>();
+        List<int> vertexs = new List<int>();
 
         private void treeForm_Load(object sender, EventArgs e)
         {
@@ -34,6 +35,7 @@ namespace graf
                             , pictureBox1.Width
                             , pictureBox1.Height
                             );
+            //panel1.HorizontalScroll.Value = 700;
         }
 
         private void деревоToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,6 +80,8 @@ namespace graf
             {
                 number = int.Parse(temp);
                 inputNodeBox.Text = "";
+                vertexs.Add(number);
+                vertexs.Sort();
             }
             else
             {
@@ -85,11 +89,19 @@ namespace graf
                 inputNodeBox.Text = "";
                 return;
             }
+
             avlTree.addNode(number);
             avlTree.clearScreen();
             avlTree.drawTree();
             avlTree.drawTree();
-            listVertex.Items.Add(number.ToString());
+
+            listVertex.Items.Clear();
+            for(int i = 0; i < vertexs.Count; ++i)
+            {
+                listVertex.Items.Add(vertexs[i]);
+            }
+            
+
             viewList.Items.Add(number.ToString());
             view_Click(sender, e);
             listVertex.SelectedIndex = 0;
@@ -116,17 +128,18 @@ namespace graf
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            //avlTree.clearScreen();
             avlTree.drawTree();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            avlTree.drawTree();
+            //avlTree.drawTree();
         }
 
         private void panel1_Click(object sender, EventArgs e)
         {
-            avlTree.drawTree();
+            //avlTree.drawTree();
         }
 
         private void deleteVertex_Click(object sender, EventArgs e)
@@ -213,20 +226,20 @@ namespace graf
 
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            OpenFileDialog loadFileDialog = new OpenFileDialog();
             Stream stream = null;
-            string dirc = Directory.GetCurrentDirectory() + "\\tests\\";
-            ofd.InitialDirectory = dirc;
-            ofd.Filter = "XML-File | *.xml";
-            ofd.FilterIndex = 1;
-            ofd.RestoreDirectory = true;
-            if (ofd.ShowDialog() == DialogResult.OK)
+            string dirc = Directory.GetCurrentDirectory() + "\\tests\\avl-tree";
+            loadFileDialog.InitialDirectory = dirc;
+            loadFileDialog.Filter = "XML-File | *.xml";
+            loadFileDialog.FilterIndex = 1;
+            loadFileDialog.RestoreDirectory = true;
+            if (loadFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    if ((stream = ofd.OpenFile()) != null)
+                    if ((stream = loadFileDialog.OpenFile()) != null)
                     {
-                        dirc = ofd.FileName;
+                        dirc = loadFileDialog.FileName;
                         stream = null;
                     }
                     else
@@ -245,11 +258,12 @@ namespace graf
             }
 
             avlTree.clear();
-
+            vertexs.Clear();
+            listVertex.Items.Clear();
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(dirc);
             XmlElement xRoot = xDoc.DocumentElement;
-
+            
             foreach (XmlNode xnode in xRoot)
             {
                 if (xnode.Name == "number")
@@ -257,6 +271,7 @@ namespace graf
                     int val = int.Parse(xnode.InnerText);
                     saveTree.Enqueue(val);
                     avlTree.addNode(val);
+                    vertexs.Add(val);
                 }
                 else
                 {
@@ -264,11 +279,22 @@ namespace graf
                     return;
                 }
             }
-            avlTree.drawTree();
-            if (panel1.HorizontalScroll.Value <= 50)
+
+
+            vertexs.Sort();
+            foreach(int i in vertexs)
             {
-                panel1.HorizontalScroll.Value = 785;
+                listVertex.Items.Add(i);
             }
+
+
+            avlTree.drawTree();
+            panel1.HorizontalScroll.Value = 785;
+        }
+
+        private void listVertex_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -385,7 +385,7 @@ namespace graf
             (
             Point point //текущие координаты курсора мыши
             ,
-            int weight=-1
+            int weight = -1
             )
         {
             if (weight == -1)
