@@ -57,6 +57,8 @@
             this.viewList = new System.Windows.Forms.ComboBox();
             this.propertiesBox = new System.Windows.Forms.TextBox();
             this.propertiesLabel = new System.Windows.Forms.Label();
+            this.BALANCE = new System.Windows.Forms.Button();
+            this.BALANCEWITHADD = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -311,11 +313,38 @@
             this.propertiesLabel.TabIndex = 19;
             this.propertiesLabel.Text = "Свойства";
             // 
+            // BALANCE
+            // 
+            this.BALANCE.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+            this.BALANCE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BALANCE.Location = new System.Drawing.Point(9, 234);
+            this.BALANCE.Name = "BALANCE";
+            this.BALANCE.Size = new System.Drawing.Size(201, 29);
+            this.BALANCE.TabIndex = 20;
+            this.BALANCE.Text = "баланс";
+            this.BALANCE.UseVisualStyleBackColor = true;
+            this.BALANCE.Click += new System.EventHandler(this.BALANCE_Click);
+            // 
+            // BALANCEWITHADD
+            // 
+            this.BALANCEWITHADD.BackColor = System.Drawing.SystemColors.Control;
+            this.BALANCEWITHADD.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+            this.BALANCEWITHADD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BALANCEWITHADD.Location = new System.Drawing.Point(9, 278);
+            this.BALANCEWITHADD.Name = "BALANCEWITHADD";
+            this.BALANCEWITHADD.Size = new System.Drawing.Size(201, 29);
+            this.BALANCEWITHADD.TabIndex = 21;
+            this.BALANCEWITHADD.Text = "постоянный баланс";
+            this.BALANCEWITHADD.UseVisualStyleBackColor = false;
+            this.BALANCEWITHADD.Click += new System.EventHandler(this.BALANCEWITHADD_Click);
+            // 
             // treeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 558);
+            this.Controls.Add(this.BALANCEWITHADD);
+            this.Controls.Add(this.BALANCE);
             this.Controls.Add(this.propertiesLabel);
             this.Controls.Add(this.propertiesBox);
             this.Controls.Add(this.viewList);
@@ -371,5 +400,7 @@
         private System.Windows.Forms.Label propertiesLabel;
         private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem загрузитьToolStripMenuItem;
+        private System.Windows.Forms.Button BALANCE;
+        private System.Windows.Forms.Button BALANCEWITHADD;
     }
 }

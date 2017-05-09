@@ -21,6 +21,7 @@ namespace graf
 
         public bool isTreeOrGraph = false;
         public bool closeForm = true;
+        public bool autoBalance = false;
         treeCode avlTree;
         Queue<int> saveTree = new Queue<int>();
         List<int> vertexs = new List<int>();
@@ -70,10 +71,7 @@ namespace graf
 
         private void addVertex_Click(object sender, EventArgs e)
         {
-            if (panel1.HorizontalScroll.Value == 0)
-            {
-                panel1.HorizontalScroll.Value = 785;
-            }
+            panel1.HorizontalScroll.Value = 785;
             string temp = inputNodeBox.Text;
             int number = 0;
             if (int.TryParse(temp, out number))
@@ -106,6 +104,13 @@ namespace graf
             view_Click(sender, e);
             listVertex.SelectedIndex = 0;
             saveTree.Enqueue(number);
+
+            if (autoBalance)
+            {
+                avlTree.balance();
+                avlTree.fullClearScreen();
+                avlTree.drawTree();
+            }
         }
 
         private void deleteTree_Click(object sender, EventArgs e)
@@ -156,7 +161,7 @@ namespace graf
                 num = int.Parse(s);
                 Console.WriteLine(num);
                 avlTree.deleteNode(num);
-                avlTree.clearScreen();
+                avlTree.fullClearScreen();
                 avlTree.drawTree();
                 listVertex.Items.RemoveAt(listVertex.SelectedIndex);
                 listVertex.SelectedIndex = 0;
@@ -170,6 +175,12 @@ namespace graf
                     asdf.Enqueue(obj);
                 }
                 saveTree = asdf;
+                if (autoBalance)
+                {
+                    avlTree.balance();
+                    avlTree.fullClearScreen();
+                    avlTree.drawTree();
+                }
             }
             else
             {
@@ -208,6 +219,8 @@ namespace graf
             }
 
             SaveFileDialog saveDialog = new SaveFileDialog();
+            string dirc = Directory.GetCurrentDirectory() + "\\tests\\avl-tree";
+            saveDialog.InitialDirectory = dirc;
             saveDialog.Title = "Сохранить тест...";
             saveDialog.OverwritePrompt = true;
             saveDialog.CheckPathExists = true;
@@ -295,6 +308,31 @@ namespace graf
         private void listVertex_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void BALANCE_Click(object sender, EventArgs e)
+        {
+            avlTree.balance();
+            avlTree.fullClearScreen();
+            avlTree.drawTree();
+        }
+
+        private void BALANCEWITHADD_Click(object sender, EventArgs e)
+        {
+            if (BALANCEWITHADD.FlatAppearance.BorderSize == 1)
+            {
+                BALANCEWITHADD.FlatAppearance.BorderSize = 4;
+                BALANCEWITHADD.FlatAppearance.BorderColor = Color.Orange;
+                BALANCE.Enabled = false;
+                autoBalance = true;
+            }
+            else
+            {
+                BALANCEWITHADD.FlatAppearance.BorderSize = 1;
+                BALANCEWITHADD.FlatAppearance.BorderColor = Color.DarkGray;
+                BALANCE.Enabled = true;
+                autoBalance = false;
+            }
         }
     }
 }
